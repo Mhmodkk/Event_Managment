@@ -1,69 +1,75 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
+        <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Events') }}
+                {{ __('Events Management - HPU') }}
             </h2>
             <div>
-                <a href="{{ route('events.create') }}" class="dark:text-white hover:text-slate-200">New Event</a>
+                <a href="{{ route('events.create') }}"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150">
+                    + New Event
+                </a>
             </div>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="relative overflow-x-auto">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Title
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Start Date
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Country
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
+                            <th scope="col" class="px-6 py-3">Event Title</th>
+                            <th scope="col" class="px-6 py-3">Faculty</th>
+                            <th scope="col" class="px-6 py-3">Start Date</th>
+                            <th scope="col" class="px-6 py-3">Tickets</th>
+                            <th scope="col" class="px-6 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($events as $event)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $event->title }}
                                 </th>
                                 <td class="px-6 py-4">
+                                    <span
+                                        class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                        {{ $event->faculty->name }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
                                     {{ $event->start_date }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $event->country->name }}
+                                    {{ $event->num_tickets }}
                                 </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-2">
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex justify-end space-x-3">
                                         <a href="{{ route('events.edit', $event) }}"
-                                            class="text-green-400 hover:text-green-600">Edit</a>
-                                        <form method="POST" class="text-red-400 hover:text-red-600"
-                                            action="{{ route('events.destroy', $event) }}">
+                                            class="font-medium text-green-600 dark:text-green-400 hover:underline">Edit</a>
+
+                                        <form method="POST" action="{{ route('events.destroy', $event) }}"
+                                            onsubmit="return confirm('Are you sure you want to delete this event?');">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{ route('events.destroy', $event) }}"
-                                                onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                            <button type="submit"
+                                                class="font-medium text-red-600 dark:text-red-400 hover:underline">
                                                 Delete
-                                            </a>
+                                            </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                    No events found
+                                <td colspan="5" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-3xl mb-2">📅</span>
+                                        <p>No events found for Al-Hawash University.</p>
+                                    </div>
                                 </td>
                             </tr>
                         @endforelse

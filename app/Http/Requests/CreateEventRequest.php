@@ -6,33 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateEventRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'title' => 'required|max:155|min:2',
-            'address' => 'required|max:155|min:2',
             'image' => 'image|required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'start_time' => 'required',
-            'country_id' => 'required',
-            'city_id' => 'required',
+            'faculty_id' => 'required|exists:faculties,id',
             'description' => 'required',
-            'num_tickets' => 'required',
-            'tags.*' => 'required|exists:tags,id',
+            'num_tickets' => 'required|integer|min:1',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
         ];
     }
 }

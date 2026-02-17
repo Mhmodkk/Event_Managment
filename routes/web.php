@@ -50,9 +50,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/events/{id}/comments', StoreCommentController::class)->name('events.comments');
     Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
-    Route::get('/countries/{country}', function (Country $country) {
-        return response()->json($country->cities);
-    });
+
 });
 
 require __DIR__.'/auth.php';

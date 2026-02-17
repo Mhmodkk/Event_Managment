@@ -22,8 +22,7 @@ class Event extends Model
         'image',
         'address',
         'user_id',
-        'country_id',
-        'city_id',
+        'faculty_id',
         'num_tickets'
     ];
 
@@ -37,16 +36,6 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    public function city(): BelongsTo
-    {
-        return $this->belongsTo(City::class);
-    }
-
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
@@ -55,6 +44,11 @@ class Event extends Model
     public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(Faculty::class);
     }
 
     public function savedEvents(): HasMany
