@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('end_date');
             $table->time('start_time');
             $table->string('image');
-            $table->string('address');
             $table->integer('num_tickets');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('faculty_id')->constrained()->cascadeOnDelete();

@@ -5,7 +5,11 @@
                 {{ __('Gallery') }}
             </h2>
             <div>
-                <a href="{{ route('galleries.create') }}" class="dark:text-white hover:text-slate-200">New Gallery</a>
+                @if (auth()->user()->isOrganizer())
+                    <a href="{{ route('galleries.create') }}"
+                        class="text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-500 font-medium rounded-lg text-sm px-6 py-3 transition duration-200 ease-in-out transform hover:scale-105 border border-gray-600">New
+                        Gallery</a>
+                @endif
             </div>
         </div>
     </x-slot>
@@ -32,7 +36,7 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <img src="{{ asset('storage/'.$gallery->image) }}" class="w-20 h-20">
+                                    <img src="{{ asset('storage/' . $gallery->image) }}" class="w-20 h-20">
                                 </th>
                                 <td class="px-6 py-4">
                                     {{ $gallery->caption }}

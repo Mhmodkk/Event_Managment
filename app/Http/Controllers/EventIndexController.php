@@ -3,15 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Faculty;
+use Illuminate\Http\Request;
 
 class EventIndexController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke()
+
+    public function __invoke(Request $request)
     {
-        $events = Event::with('country', 'tags')->orderBy('created_at', 'desc')->paginate(12);
-        return view('eventIndex', compact('events'));
+        $faculties = Faculty::all();
+
+        $query = Event::with('faculty', 'tags');
+
+        if ($request->has('faculty_id') && $request->faculty_id != '') {
+            $query->where('faculty_id', $request->faculty_id);
+        }
+
+        if (auth()->check() && auth()->user()->faculty_id) {
+            $userFacultyId = auth()->user()->faculty_id;
+            $events = $query->orderByRaw("faculty_id = $userFacultyId DESC")
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(12);
+        } else {
+            $events = $query->orderBy('created_at', 'desc')->paginate(12);
+        }
+
+        return view('eventIndex', compact('events', 'faculties'));
     }
 }

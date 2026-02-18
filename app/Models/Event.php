@@ -20,7 +20,6 @@ class Event extends Model
         'end_date',
         'start_time',
         'image',
-        'address',
         'user_id',
         'faculty_id',
         'num_tickets'

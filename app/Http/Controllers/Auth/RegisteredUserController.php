@@ -36,14 +36,14 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'faculty_id' => ['required', 'exists:faculties,id'], // التحقق من صحة اختيار الكلية
+            'faculty_id' => ['required', 'exists:faculties,id'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'faculty_id' => $request->faculty_id, // حفظ معرف الكلية
+            'faculty_id' => $request->faculty_id,
         ]);
 
         event(new Registered($user));

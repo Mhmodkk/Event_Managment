@@ -15,7 +15,6 @@ use App\Http\Controllers\SavedEventController;
 use App\Http\Controllers\SavedEventSystemController;
 use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\WelcomeController;
-use App\Models\Country;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class)->name('welcome');
@@ -24,7 +23,13 @@ Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/gallery', GalleryIndexController::class)->name('galleryIndex');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = auth()->user();
+
+    $myEvents = $user->isOrganizer()
+        ? \App\Models\Event::where('user_id', $user->id)->withCount('attendings')->get()
+        : collect();
+
+    return view('dashboard', compact('myEvents'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -38,19 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/liked-events', LikedEventController::class)->name('likedEvents');
     Route::get('/saved-events', SavedEventController::class)->name('savedEvents');
     Route::get('/attendind-events', AttendingEventController::class)->name('attendingEvents');
-    Route::post(
-        '/events-like/{id}',
-        LikeSystemController::class
-    )->name('events.like');
-    Route::post(
-        '/events-saved/{id}',
-        SavedEventSystemController::class
-    )->name('events.saved');
+
+    Route::post('/events-like/{id}', LikeSystemController::class)->name('events.like');
+    Route::post('/events-saved/{id}', SavedEventSystemController::class)->name('events.saved');
     Route::post('/events-attending/{id}', AttentingSystemController::class)->name('events.attending');
 
     Route::post('/events/{id}/comments', StoreCommentController::class)->name('events.comments');
     Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

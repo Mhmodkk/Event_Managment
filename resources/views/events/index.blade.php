@@ -5,10 +5,12 @@
                 {{ __('Events Management - HPU') }}
             </h2>
             <div>
-                <a href="{{ route('events.create') }}"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150">
-                    + New Event
-                </a>
+                @if (auth()->user()->isOrganizer())
+                    <a href="{{ route('events.create') }}"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-150">
+                        + New Event
+                    </a>
+                @endif
             </div>
         </div>
     </x-slot>

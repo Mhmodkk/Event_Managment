@@ -13,7 +13,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = auth()->user()->galleries;
+        $galleries = Gallery::latest()->paginate(12);
+
         return view('galleries.index', compact('galleries'));
     }
 
@@ -30,10 +31,15 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->isOrganizer()) {
+            abort(403, 'Students cannot upload to gallery');
+        }
+
         $this->validate($request, [
             'caption' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
         if ($request->hasFile('image')) {
             auth()->user()->galleries()->create([
                 'caption' => $request->input('caption'),
