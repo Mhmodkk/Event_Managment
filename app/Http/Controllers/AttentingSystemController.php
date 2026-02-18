@@ -7,22 +7,29 @@ use Illuminate\Http\Request;
 
 class AttentingSystemController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
     public function __invoke(Request $request, $id)
     {
         $event = Event::findOrFail($id);
+
         $attending = $event->attendings()->where('user_id', auth()->id())->first();
-        if (!is_null($attending)) {
+
+        if ($attending) {
             $attending->delete();
-            return null;
+            return response()->json(['status' => 'removed', 'message' => 'Reservation cancelled.']);
         } else {
-            $attending = $event->attendings()->create([
+
+            $bookedCount = $event->attendings()->count();
+
+            if ($bookedCount >= $event->num_tickets) {
+                return response()->json(['error' => 'Sorry, no more seats available for this event.'], 422);
+            }
+
+            $newAttending = $event->attendings()->create([
                 'user_id' => auth()->id(),
                 'num_tickets' => 1
             ]);
-            return $attending;
+
+            return response()->json(['status' => 'added', 'data' => $newAttending]);
         }
     }
 }

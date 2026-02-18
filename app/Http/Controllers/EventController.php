@@ -11,21 +11,25 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        // تم استبدال country بـ faculty
-        $events = Event::with('faculty')->get();
+        $query = Event::with(['faculty', 'tags']);
+
+        if ($request->has('my_faculty')) {
+            $query->where('faculty_id', auth()->user()->faculty_id);
+        }
+
+        $events = $query->latest()->get();
         return view('events.index', compact('events'));
     }
 
     public function create(): View
     {
-        if (!auth()->user()->isOrganizer()) {
-            abort(403, 'عذراً، يجب أن تملك صلاحية منظم في جامعة الحواش للقيام بهذا الإجراء.');
-        }
+        $this->authorizeOrganizer();
 
         $faculties = Faculty::all();
         $tags = Tag::all();
@@ -34,9 +38,7 @@ class EventController extends Controller
 
     public function store(CreateEventRequest $request): RedirectResponse
     {
-        if (!auth()->user()->isOrganizer()) {
-            abort(403);
-        }
+        $this->authorizeOrganizer();
 
         if ($request->hasFile('image')) {
             $data = $request->validated();
@@ -46,17 +48,15 @@ class EventController extends Controller
 
             $event = Event::create($data);
             $event->tags()->attach($request->tags);
-            return to_route('events.index');
-        } else {
-            return back();
+            return to_route('events.index')->with('success', 'Event created successfully!');
         }
+
+        return back()->with('error', 'Image is required.');
     }
 
     public function edit(Event $event): View
     {
-        if (auth()->id() !== $event->user_id) {
-            abort(403);
-        }
+        $this->authorizeOwner($event);
 
         $faculties = Faculty::all();
         $tags = Tag::all();
@@ -65,9 +65,7 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
-        if (auth()->id() !== $event->user_id) {
-            abort(403);
-        }
+        $this->authorizeOwner($event);
 
         $data = $request->validated();
         if ($request->hasFile('image')) {
@@ -78,18 +76,26 @@ class EventController extends Controller
         $data['slug'] = Str::slug($request->title);
         $event->update($data);
         $event->tags()->sync($request->tags);
-        return to_route('events.index');
+
+        return to_route('events.index')->with('success', 'Event updated successfully!');
     }
 
     public function destroy(Event $event): RedirectResponse
     {
-        if (auth()->id() !== $event->user_id) {
-            abort(403);
-        }
+        $this->authorizeOwner($event);
 
         Storage::delete($event->image);
         $event->tags()->detach();
         $event->delete();
-        return to_route('events.index');
+
+        return to_route('events.index')->with('success', 'Event deleted.');
+    }
+
+    protected function authorizeOrganizer() {
+        if (!auth()->user()->isOrganizer()) abort(403, 'Organizer access required.');
+    }
+
+    protected function authorizeOwner(Event $event) {
+        if (auth()->id() !== $event->user_id) abort(403, 'You do not own this event.');
     }
 }
