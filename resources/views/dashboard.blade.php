@@ -82,26 +82,28 @@
                     @endif
 
                     <hr class="my-6 border-gray-200 dark:border-gray-700">
-
-                    <div>
-                        <h4 class="text-lg font-semibold mb-4">Quick Actions</h4>
-                        <div class="flex flex-wrap gap-4">
-                            @if (auth()->user()->isOrganizer())
-                                <a href="{{ route('events.create') }}"
-                                    class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition shadow-lg shadow-indigo-500/30">
-                                    + Create New Activity
+                    @if (auth()->user()->isOrganizer() && $myEvents->count() > 0)
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Quick Actions</h4>
+                            <div class="flex flex-wrap gap-4">
+                                @if (auth()->user()->isOrganizer())
+                                    <a href="{{ route('events.create') }}"
+                                        class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition shadow-lg shadow-indigo-500/30">
+                                        + Create New Activity
+                                    </a>
+                                @endif
+                                <a href="{{ route('events.index') }}"
+                                    class="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg font-bold transition">
+                                    Manage My Content
                                 </a>
-                            @endif
-                            <a href="{{ route('events.index') }}"
-                                class="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg font-bold transition">
-                                Manage My Content
-                            </a>
-                            <a href="{{ route('attendingEvents') }}"
-                                class="px-6 py-3 border border-indigo-500 text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg font-bold transition">
-                                My Reserved Tickets
-                            </a>
+                                <a href="{{ route('attendingEvents') }}"
+                                    class="px-6 py-3 border border-indigo-500 text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg font-bold transition">
+                                    My Reserved Tickets
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
 
                 </div>
             </div>

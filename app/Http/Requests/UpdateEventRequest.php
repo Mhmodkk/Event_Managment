@@ -22,7 +22,7 @@ class UpdateEventRequest extends FormRequest
             'start_date' => 'required',
             'end_date' => 'required',
             'start_time' => 'required',
-            'country_id' => 'required',
+            'faculty_id' => 'required',
             'city_id' => 'required',
             'description' => 'required',
             'num_tickets' => 'required',

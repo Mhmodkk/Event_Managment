@@ -58,6 +58,9 @@ class GalleryController extends Controller
      */
     public function edit(Gallery $gallery)
     {
+        if (!auth()->user()->isOrganizer()) {
+            abort(403, 'Students cannot edit gallery');
+        }
         return view('galleries.edit', compact('gallery'));
     }
 
@@ -66,6 +69,9 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
+        if (!auth()->user()->isOrganizer()) {
+            abort(403, 'Students cannot update gallery');
+        }
         $path = $gallery->image;
         $this->validate($request, [
             'caption' => 'required',
@@ -88,6 +94,9 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery)
     {
+        if (!auth()->user()->isOrganizer()) {
+            abort(403, 'Students cannot delete from gallery');
+        }
         Storage::delete($gallery->image);
         $gallery->delete();
         return back();
