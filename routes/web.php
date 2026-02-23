@@ -15,6 +15,7 @@ use App\Http\Controllers\SavedEventController;
 use App\Http\Controllers\SavedEventSystemController;
 use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class)->name('welcome');
@@ -26,7 +27,7 @@ Route::get('/dashboard', function () {
     $user = auth()->user();
 
     $myEvents = $user->isOrganizer()
-        ? \App\Models\Event::where('user_id', $user->id)->withCount('attendings')->get()
+        ? Event::where('user_id', $user->id)->withCount('attendings')->get()
         : collect();
 
     return view('dashboard', compact('myEvents'));
