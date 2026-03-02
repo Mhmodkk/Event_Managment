@@ -12,6 +12,7 @@ class Gallery extends Model
 
     protected $fillable = [
         'user_id',
+        'event_id',
         'image',
         'caption'
     ];
@@ -21,4 +22,8 @@ class Gallery extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

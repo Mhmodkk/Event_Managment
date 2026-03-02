@@ -69,4 +69,9 @@ class Event extends Model
     {
         return $this->tags->contains($tags);
     }
+
+    public function galleries(): HasMany
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }
