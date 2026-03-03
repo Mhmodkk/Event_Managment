@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+:root {
+    --color-bg-primary: #f9fafb;
+    --color-bg-card: #ffffff;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-primary: #1e40af;
+    --color-primary-hover: #1e3a8a;
+    --color-border: #d1d5db;
+    --color-accent: #3b82f6;
+}
+
+.dark {
+    --color-bg-primary: #0f172a;
+    --color-bg-card: #1e293b;
+    --color-text-primary: #e2e8f0;
+    --color-text-secondary: #94a3b8;
+    --color-primary: #60a5fa;
+    --color-primary-hover: #3b82f6;
+    --color-border: #334155;
+}
+
+
+body {
+    @apply bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] transition-colors duration-300;
+}
+
+.bg-card {
+    @apply bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-sm;
+}
+
+.text-primary {
+    @apply text-[var(--color-text-primary)];
+}
+
+.bg-primary {
+    @apply bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white;
+}
+
+.text-secondary {
+    @apply text-[var(--color-text-secondary)];
+}
+
+.dark .bg-gray-100 {
+    @apply bg-gray-900;
+}
+
+.dark .bg-white {
+    @apply bg-gray-800;
+}
+
+.dark .text-gray-900 {
+    @apply text-gray-100;
+}
+
+.dark .border-gray-300 {
+    @apply border-gray-600;
+}
+
+.theme-toggle-btn {
+    @apply p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition;
+}

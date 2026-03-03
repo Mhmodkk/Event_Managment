@@ -42,11 +42,24 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'ahmad@gmail.com'],
             [
-                'name'              => 'Ahmad (Organizer)',
+                'name'              => 'Ahmad',
                 'image'             => 'profiles/default-organizer.jpg',
                 'faculty_id'        => 2,
                 'password'          => Hash::make('12345678'),
                 'role'              => 'organizer',
+                'email_verified_at' => now(),
+                'remember_token'    => Str::random(10),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'mahmod@gmail.com'],
+            [
+                'name'              => 'Mahmod (Student)',
+                'image'             => 'profiles/default-student.jpg',
+                'faculty_id'        => 2,
+                'password'          => Hash::make('12345678'),
+                'role'              => 'student',
                 'email_verified_at' => now(),
                 'remember_token'    => Str::random(10),
             ]

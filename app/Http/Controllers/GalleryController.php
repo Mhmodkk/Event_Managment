@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,8 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        return view('galleries.create');
+        $events = Event::where('user_id', auth()->id())->get();
+        return view('galleries.create', compact('events'));
     }
 
     /**
@@ -36,13 +38,17 @@ class GalleryController extends Controller
         }
 
         $this->validate($request, [
+            'event_id' => 'required|exists:events,id',
             'caption' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        $path = $request->file('image')->store('galleries', 'public');
 
         if ($request->hasFile('image')) {
             auth()->user()->galleries()->create([
                 'caption' => $request->input('caption'),
+                'event_id' => $request->event_id,
+                'user_id'  => auth()->id(),
                 'image' => $request->file('image')->store('galleries', 'public'),
             ]);
 
