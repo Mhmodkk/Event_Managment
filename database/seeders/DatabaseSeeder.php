@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'mahmod@gmail.com'],
             [
-                'name'              => 'Mahmod (Student)',
+                'name'              => 'Mahmod',
                 'image'             => 'profiles/default-student.jpg',
                 'faculty_id'        => 2,
                 'password'          => Hash::make('12345678'),

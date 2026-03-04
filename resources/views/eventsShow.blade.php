@@ -3,7 +3,7 @@
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $event->title }}</h1>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-blue-700">{{ $event->title }}</h1>
                 <div class="flex items-center mt-2 text-indigo-600 dark:text-indigo-400 font-medium">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -44,11 +44,9 @@
             @endauth
         </div>
 
-        <!-- Main Content Grid -->
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Column - Main Content -->
             <div class="lg:col-span-2 space-y-6">
-                <!-- Event Image -->
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
                     <img src="{{ asset('/storage/' . $event->image) }}"
                         class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105"

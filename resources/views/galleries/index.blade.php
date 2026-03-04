@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-2xl text-slate-900 dark:text-blue-700 leading-tight">
-                {{ __('Gallery Archive') }}
+                {{ __('أرشيف المعرض') }}
             </h2>
             <div>
                 @if (auth()->user()->isOrganizer())
                     <a href="{{ route('galleries.create') }}"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-500/50 font-medium rounded-lg text-sm px-6 py-3 transition duration-200 ease-in-out transform hover:scale-105 border border-blue-600">
-                        + New Gallery
+                        + معرض جديد
                     </a>
                 @endif
             </div>
@@ -22,11 +22,11 @@
                 <table class="w-full text-sm text-left text-slate-600 dark:text-slate-300">
                     <thead class="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-800 dark:text-slate-200">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Image</th>
-                            <th scope="col" class="px-6 py-3">Event Name</th>
-                            <th scope="col" class="px-6 py-3">Caption</th>
+                            <th scope="col" class="px-6 py-3">صورة</th>
+                            <th scope="col" class="px-6 py-3">الفعالية</th>
+                            <th scope="col" class="px-6 py-3">شرح</th>
                             <th scope="col" class="px-6 py-3">
-                                {{ auth()->user()->isOrganizer() ? 'Actions' : 'Information' }}
+                                {{ auth()->user()->isOrganizer() ? 'رابط' : 'معلومات' }}
                             </th>
                         </tr>
                     </thead>
@@ -34,23 +34,19 @@
                         @forelse($galleries as $gallery)
                             <tr
                                 class="bg-white border-b dark:bg-slate-900 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                                {{-- عمود الصورة --}}
                                 <td class="px-6 py-4">
                                     <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->caption }}"
                                         class="w-20 h-20 object-cover rounded-lg shadow-sm border border-slate-100 dark:border-slate-600">
                                 </td>
 
-                                {{-- عمود اسم الفعالية --}}
                                 <td class="px-6 py-4 font-semibold text-blue-600 dark:text-blue-400">
                                     {{ $gallery->event->title ?? 'Untitled Event' }}
                                 </td>
 
-                                {{-- عمود الوصف --}}
                                 <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
                                     {{ $gallery->caption }}
                                 </td>
 
-                                {{-- عمود الإجراءات أو المعلومات --}}
                                 <td class="px-6 py-4">
                                     @if (auth()->user()->isOrganizer())
                                         <div class="flex space-x-4">
@@ -70,9 +66,8 @@
                                     @else
                                         <div class="flex flex-col">
                                             <span
-                                                class="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">Gallery
-                                                Item</span>
-                                            <span class="text-slate-500 dark:text-slate-400 text-xs">Published:
+                                                class="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">صورة</span>
+                                            <span class="text-slate-500 dark:text-slate-400 text-xs">نشرت:
                                                 {{ $gallery->created_at->format('M d, Y') }}</span>
                                         </div>
                                     @endif

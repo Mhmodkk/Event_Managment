@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-slate-900 dark:text-blue-700 leading-tight">
-                {{ __('Saved Events') }}
+                {{ __('الفعاليات المحفوظة') }}
             </h2>
         </div>
     </x-slot>
@@ -13,10 +13,10 @@
                 <table class="w-full text-sm text-left text-slate-600 dark:text-slate-300">
                     <thead class="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-800 dark:text-slate-200">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Title</th>
-                            <th scope="col" class="px-6 py-3">Start Date</th>
-                            <th scope="col" class="px-6 py-3">Faculty</th>
-                            <th scope="col" class="px-6 py-3 text-right">Action</th>
+                            <th scope="col" class="px-6 py-3">العنوان</th>
+                            <th scope="col" class="px-6 py-3">تاريخ البدء</th>
+                            <th scope="col" class="px-6 py-3">الكلية</th>
+                            <th scope="col" class="px-6 py-3 text-right">رابط</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +36,7 @@
                                 <td class="px-6 py-4 text-right">
                                     <a href="{{ route('eventShow', $event) }}"
                                        class="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium transition">
-                                        View
+                                        عرض
                                     </a>
                                 </td>
                             </tr>
