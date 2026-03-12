@@ -27,7 +27,7 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
-        if (!auth()->user()->isOrganizer()) {
+        if (! (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())) {
             abort(403, 'Students cannot upload to gallery');
         }
 
@@ -48,13 +48,12 @@ class GalleryController extends Controller
         return to_route('galleries.index')->with('success', 'تم إضافة الصورة بنجاح!');
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Gallery $gallery)
     {
-        if (!auth()->user()->isOrganizer()) {
+        if (! (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())) {
             abort(403, 'Students cannot edit gallery');
         }
         return view('galleries.edit', compact('gallery'));
@@ -65,10 +64,12 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
-        if (!auth()->user()->isOrganizer()) {
+        if (! (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())) {
             abort(403, 'Students cannot update gallery');
         }
+
         $path = $gallery->image;
+
         $this->validate($request, [
             'caption' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -78,10 +79,12 @@ class GalleryController extends Controller
             Storage::delete($gallery->image);
             $path = $request->file('image')->store('galleries', 'public');
         }
+
         $gallery->update([
             'caption' => $request->input('caption'),
             'image' => $path,
         ]);
+
         return to_route('galleries.index');
     }
 
@@ -90,9 +93,10 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery)
     {
-        if (!auth()->user()->isOrganizer()) {
+        if (! (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())) {
             abort(403, 'Students cannot delete from gallery');
         }
+
         Storage::delete($gallery->image);
         $gallery->delete();
         return back();

@@ -35,10 +35,14 @@ class User extends Authenticatable
         ];
     }
 
-
-    public function isOrganizer()
+    public function isAdmin()
     {
-        return $this->role === 'organizer';
+        return $this->role === 'admin';
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->role === 'super_admin';
     }
 
     public function isStudent()

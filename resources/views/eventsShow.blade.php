@@ -9,41 +9,48 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {{ $event->start_date }} | {{ $event->start_time }}
+                    {{ $event->start_date->format('d/m/Y') }} | {{ $event->start_time }}
                 </div>
             </div>
 
             @auth
-                <div class="flex items-center space-x-3 rtl:space-x-reverse" x-data="interactionHandler()">
-                    <button @click="toggle('like')"
-                        :class="liked ? 'bg-red-500 text-white' :
-                            'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
-                        class="p-3 rounded-full transition-all duration-300 transform hover:scale-110 shadow-md">
-                        <svg class="w-6 h-6" :fill="liked ? 'currentColor' : 'none'" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </button>
-                    <button @click="toggle('save')"
-                        :class="saved ? 'bg-yellow-500 text-white' :
-                            'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
-                        class="p-3 rounded-full transition-all duration-300 transform hover:scale-110 shadow-md">
-                        <svg class="w-6 h-6" :fill="saved ? 'currentColor' : 'none'" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                        </svg>
-                    </button>
-                    <button @click="toggle('attending')"
-                        :class="attending ? 'bg-green-600 text-white' : 'bg-indigo-600 text-white'"
-                        class="px-6 py-3 rounded-lg font-bold shadow-lg transition-all hover:opacity-90">
-                        <span x-text="attending ? '✓ Attending' : 'Book My Spot'"></span>
-                    </button>
-                </div>
+                @unless (Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())
+                    <div class="flex items-center space-x-3 rtl:space-x-reverse" x-data="interactionHandler()">
+                        <button @click="toggle('like')"
+                            :class="liked ? 'bg-red-500 text-white' :
+                                'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                            class="p-3 rounded-full transition-all duration-300 transform hover:scale-110 shadow-md">
+                            <svg class="w-6 h-6" :fill="liked ? 'currentColor' : 'none'" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </button>
+
+                        <button @click="toggle('save')"
+                            :class="saved ? 'bg-yellow-500 text-white' :
+                                'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                            class="p-3 rounded-full transition-all duration-300 transform hover:scale-110 shadow-md">
+                            <svg class="w-6 h-6" :fill="saved ? 'currentColor' : 'none'" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                            </svg>
+                        </button>
+
+                        <button @click="toggle('attending')"
+                            :class="attending ? 'bg-green-600 text-white' : 'bg-indigo-600 text-white'"
+                            class="px-6 py-3 rounded-lg font-bold shadow-lg transition-all hover:opacity-90">
+                            <span x-text="attending ? '✓ Attending' : 'Book My Spot'"></span>
+                        </button>
+                    </div>
+                @else
+                    <div class="px-6 py-3 bg-gray-500 text-white rounded-lg font-bold shadow-lg text-center">
+                        لا يمكن للمدراء تسجيل حضور
+                    </div>
+                @endunless
             @endauth
         </div>
-
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-6">
@@ -62,14 +69,45 @@
                 <!-- Description Section -->
                 <div
                     class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">About this activity</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">تفاصيل الفعالية</h2>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
                         {{ $event->description }}
                     </p>
 
+                    <!-- الحقول الجديدة -->
+                    <div
+                        class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">نوع الفعالية</h3>
+                            <p class="text-gray-700 dark:text-gray-300">{{ ucfirst($event->type) }}</p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">المكان</h3>
+                            <p class="text-gray-700 dark:text-gray-300">{{ $event->location ?? 'غير محدد' }}</p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">مفتوحة للجمهور</h3>
+                            <p class="text-gray-700 dark:text-gray-300">
+                                {{ $event->is_public ? 'نعم' : 'لا (داخلية فقط)' }}</p>
+                        </div>
+
+                        @if ($event->excluded_days && count(json_decode($event->excluded_days, true)) > 0)
+                            <div class="md:col-span-2">
+                                <h3 class="font-semibold text-gray-900 dark:text-white mb-1">أيام العطل المستثناة</h3>
+                                <ul class="list-disc list-inside text-gray-600 dark:text-gray-300">
+                                    @foreach (json_decode($event->excluded_days, true) as $day)
+                                        <li>{{ \Carbon\Carbon::parse($day)->format('d/m/Y') }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+
                     <!-- Tags Section -->
                     <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                        <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Tags</h3>
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-3">التصنيفات</h3>
                         <div class="flex flex-wrap gap-2">
                             @foreach ($event->tags as $tag)
                                 <span
@@ -157,21 +195,34 @@
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                             <div>
-                                <p class="font-semibold dark:text-white">{{ $event->address }}</p>
+                                <p class="font-semibold dark:text-white">{{ $event->location ?? 'غير محدد' }}</p>
                                 <p class="text-sm text-gray-500 dark:text-gray-400">{{ $event->faculty->name }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Organizer Card -->
+                <!-- Admin Card -->
                 <div
                     class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-800">
-                    <h3 class="text-lg font-bold text-indigo-900 dark:text-indigo-300 mb-2">Organizer Information</h3>
+                    <h3 class="text-lg font-bold text-indigo-900 dark:text-indigo-300 mb-2">Admin Information</h3>
                     <p class="text-indigo-800 dark:text-indigo-400">
                         Created by: <span class="font-bold">{{ $event->user->name }}</span>
                     </p>
                 </div>
+
+                <!-- QR Code Card -->
+                @if ($event->qr_code)
+                    <div
+                        class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                        <h3 class="text-xl font-bold mb-4 dark:text-white">رمز الحضور (QR)</h3>
+                        <img src="{{ asset('storage/' . $event->qr_code) }}" alt="QR Code"
+                            class="mx-auto w-48 h-48 object-contain border-4 border-indigo-500 rounded-lg">
+                        <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                            امسح الكود عند الوصول
+                        </p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

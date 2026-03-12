@@ -6,16 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('type')->nullable();
             $table->string('slug')->unique();
             $table->longText('description');
+            $table->string('location')->nullable();
+            $table->json('excluded_days')->nullable();
+            $table->boolean('is_public')->default(false);
+            $table->string('qr_code')->nullable();           
             $table->date('start_date');
             $table->date('end_date');
             $table->time('start_time');
@@ -27,9 +29,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('events');

@@ -16,7 +16,7 @@ class RestrictToOrganizer
             return response()->json(['error' => 'يجب تسجيل الدخول'], 401);
         }
 
-        if (!in_array($user->role, ['organizer'])) {
+        if (! (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())) {
             return response()->json([
                 'error' => 'غير مصرح لهذه العملية. هذه الخاصية للمشرفين والإداريين فقط.'
             ], 403);

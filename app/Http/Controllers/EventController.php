@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EventController extends Controller
 {
@@ -23,35 +24,80 @@ class EventController extends Controller
             $query->where('faculty_id', auth()->user()->faculty_id);
         }
 
-        $events = $query->latest()->get();
+        $events = $query->latest()->paginate(10);
+
         return view('events.index', compact('events'));
     }
 
     public function create(): View
     {
-        $this->authorizeOrganizer();
-
         $faculties = Faculty::all();
         $tags = Tag::all();
+
         return view('events.create', compact('faculties', 'tags'));
     }
 
     public function store(CreateEventRequest $request): RedirectResponse
     {
-        $this->authorizeOrganizer();
+        $data = $request->validated();
 
+        // رفع صورة الفعالية الأساسية
         if ($request->hasFile('image')) {
-            $data = $request->validated();
-            $data['image'] = Storage::putFile('events', $request->file('image'));
-            $data['user_id'] = auth()->id();
-            $data['slug'] = Str::slug($request->title);
-
-            $event = Event::create($data);
-            $event->tags()->attach($request->tags);
-            return to_route('events.index')->with('success', 'Event created successfully!');
+            $data['image'] = $request->file('image')->store('events', 'public');
         }
 
-        return back()->with('error', 'Image is required.');
+        $data['user_id'] = auth()->id();
+        $data['slug'] = Str::slug($data['title']);
+
+        if ($request->has('excluded_days_json')) {
+            $data['excluded_days'] = $request->excluded_days_json;
+        }
+
+        $data['is_public'] = $request->boolean('is_public');
+
+        // إنشاء الفعالية أولاً للحصول على الـ ID
+        $event = Event::create($data);
+
+        if ($request->has('tags')) {
+            $event->tags()->sync($request->tags);
+        }
+
+        // --- كود توليد الـ QR Code المطور ---
+        // نستخدم امتداد .svg لتجنب مشاكل مكتبة Imagick و GD
+        $qrPath = 'qrcodes/event-' . $event->id . '.svg';
+
+        // التأكد من وجود المجلد في الـ Storage
+        if (!Storage::disk('public')->exists('qrcodes')) {
+            Storage::disk('public')->makeDirectory('qrcodes');
+        }
+
+        // توليد الكود وحفظه مباشرة في المسار
+        // الـ SVG لا يحتاج لتعريفات إضافية في php.ini
+        QrCode::size(300)
+            ->style('round') // شكل نقاط دائري لإعطاء طابع عصري
+            ->margin(1)
+            ->generate(route('eventShow', $event->id), storage_path('app/public/' . $qrPath));
+
+        // تحديث قاعدة البيانات بمسار الكود
+        $event->update(['qr_code' => $qrPath]);
+        // -----------------------------------
+
+        return redirect()->route('events.index')->with('success', 'تم إنشاء الفعالية بنجاح');
+    }
+
+    public function show(Event $event): View
+    {
+        $event->load(['faculty', 'tags', 'user', 'comments.user']);
+
+        $like = $savedEvent = $attending = null;
+
+        if (auth()->check()) {
+            $like = $event->likes()->where('user_id', auth()->id())->first();
+            $savedEvent = $event->savedEvents()->where('user_id', auth()->id())->first();
+            $attending = $event->attendings()->where('user_id', auth()->id())->first();
+        }
+
+        return view('events.show', compact('event', 'like', 'savedEvent', 'attending'));
     }
 
     public function edit(Event $event): View
@@ -60,7 +106,8 @@ class EventController extends Controller
 
         $faculties = Faculty::all();
         $tags = Tag::all();
-        return view('events.edit', compact('faculties', 'tags', 'event'));
+
+        return view('events.edit', compact('event', 'faculties', 'tags'));
     }
 
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
@@ -68,34 +115,51 @@ class EventController extends Controller
         $this->authorizeOwner($event);
 
         $data = $request->validated();
+
         if ($request->hasFile('image')) {
-            Storage::delete($event->image);
-            $data['image'] = Storage::putFile('events', $request->file('image'));
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $data['image'] = $request->file('image')->store('events', 'public');
         }
 
-        $data['slug'] = Str::slug($request->title);
-        $event->update($data);
-        $event->tags()->sync($request->tags);
+        if ($request->has('excluded_days_json')) {
+            $data['excluded_days'] = $request->excluded_days_json;
+        }
 
-        return to_route('events.index')->with('success', 'Event updated successfully!');
+        $data['is_public'] = $request->boolean('is_public');
+
+        $event->update($data);
+
+        if ($request->has('tags')) {
+            $event->tags()->sync($request->tags);
+        }
+
+        return redirect()->route('events.index')->with('success', 'تم تحديث الفعالية بنجاح');
     }
 
     public function destroy(Event $event): RedirectResponse
     {
         $this->authorizeOwner($event);
 
-        Storage::delete($event->image);
+        if ($event->image) {
+            Storage::disk('public')->delete($event->image);
+        }
+
+        if ($event->qr_code) {
+            Storage::disk('public')->delete($event->qr_code);
+        }
+
         $event->tags()->detach();
         $event->delete();
 
-        return to_route('events.index')->with('success', 'Event deleted.');
+        return redirect()->route('events.index')->with('success', 'تم حذف الفعالية');
     }
 
-    protected function authorizeOrganizer() {
-        if (!auth()->user()->isOrganizer()) abort(403, 'Organizer access required.');
-    }
-
-    protected function authorizeOwner(Event $event) {
-        if (auth()->id() !== $event->user_id) abort(403, 'You do not own this event.');
+    protected function authorizeOwner(Event $event)
+    {
+        if (auth()->id() !== $event->user_id) {
+            abort(403, 'لست صاحب هذه الفعالية');
+        }
     }
 }

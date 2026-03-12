@@ -4,7 +4,8 @@
             <h2 class="font-semibold text-2xl text-slate-900 dark:text-blue-700 leading-tight">
                 {{ __('Events Management - HPU') }}
             </h2>
-            @if (auth()->user()->isOrganizer())
+
+            @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                 <a href="{{ route('events.create') }}"
                    class="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-lg font-medium transition shadow-md hover:shadow-lg">
                     + فعالية جديدة

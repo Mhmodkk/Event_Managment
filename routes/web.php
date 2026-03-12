@@ -26,7 +26,7 @@ Route::get('/gallery', GalleryIndexController::class)->name('galleryIndex');
 Route::get('/dashboard', function () {
     $user = auth()->user();
 
-    $myEvents = $user->isOrganizer()
+    $myEvents = ($user->isAdmin() || $user->isSuperAdmin())
         ? Event::where('user_id', $user->id)->withCount('attendings')->get()
         : collect();
 

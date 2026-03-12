@@ -14,20 +14,27 @@ class Event extends Model
 
     protected $fillable = [
         'title',
+        'type',
         'slug',
         'description',
+        'location',
+        'excluded_days',
+        'is_public',
+        'qr_code',
         'start_date',
         'end_date',
         'start_time',
         'image',
+        'num_tickets',
         'user_id',
         'faculty_id',
-        'num_tickets'
     ];
 
     protected $casts = [
         'start_date' => 'date:m/d/Y',
         'end_date' => 'date:m/d/Y',
+        'excluded_days' => 'array',
+        'is_public' => 'boolean',
     ];
 
     public function user(): BelongsTo
@@ -62,7 +69,7 @@ class Event extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->BelongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function hasTags($tags)

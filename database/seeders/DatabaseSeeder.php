@@ -43,10 +43,10 @@ class DatabaseSeeder extends Seeder
             ['email' => 'ahmad@gmail.com'],
             [
                 'name'              => 'Ahmad',
-                'image'             => 'profiles/default-organizer.jpg',
+                'image'             => 'profiles/default-admin.jpg',
                 'faculty_id'        => 2,
                 'password'          => Hash::make('12345678'),
-                'role'              => 'organizer',
+                'role'              => 'admin',
                 'email_verified_at' => now(),
                 'remember_token'    => Str::random(10),
             ]

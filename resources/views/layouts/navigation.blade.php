@@ -14,28 +14,34 @@
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (auth()->user()->isOrganizer())
+
+                    @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                         <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')"
                             class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                             {{ __('My Events') }}
                         </x-nav-link>
                     @endif
+
                     <x-nav-link :href="route('eventIndex')" :active="request()->routeIs('eventIndex') || request()->is('/') || request()->is('e')"
                         class="text-blue-700 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-100">
                         {{ __('Explore Events') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.*')"
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Gallery') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')"
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Liked') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('savedEvents')" :active="request()->routeIs('savedEvents')"
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Saved') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('attendingEvents')" :active="request()->routeIs('attendingEvents')"
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Attending') }}
@@ -101,24 +107,29 @@
                 class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            @if (auth()->user()->isOrganizer())
+
+            @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                 <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')"
                     class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                     {{ __('My Events') }}
                 </x-responsive-nav-link>
             @endif
+
             <x-responsive-nav-link :href="route('galleries.index')" :active="request()->routeIs('galleries.*')"
                 class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                 {{ __('Gallery') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')"
                 class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                 {{ __('Liked') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('savedEvents')" :active="request()->routeIs('savedEvents')"
                 class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                 {{ __('Saved') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('attendingEvents')" :active="request()->routeIs('attendingEvents')"
                 class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                 {{ __('Attending') }}

@@ -5,7 +5,7 @@
                 {{ __('أرشيف المعرض') }}
             </h2>
             <div>
-                @if (auth()->user()->isOrganizer())
+                @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                     <a href="{{ route('galleries.create') }}"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-500/50 font-medium rounded-lg text-sm px-6 py-3 transition duration-200 ease-in-out transform hover:scale-105 border border-blue-600">
                         + معرض جديد
@@ -17,8 +17,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div
-                class="bg-white dark:bg-slate-900 overflow-hidden shadow-lg sm:rounded-2xl border border-slate-200 dark:border-slate-700">
+            <div class="bg-white dark:bg-slate-900 overflow-hidden shadow-lg sm:rounded-2xl border border-slate-200 dark:border-slate-700">
                 <table class="w-full text-sm text-left text-slate-600 dark:text-slate-300">
                     <thead class="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-800 dark:text-slate-200">
                         <tr>
@@ -26,14 +25,13 @@
                             <th scope="col" class="px-6 py-3">الفعالية</th>
                             <th scope="col" class="px-6 py-3">شرح</th>
                             <th scope="col" class="px-6 py-3">
-                                {{ auth()->user()->isOrganizer() ? 'رابط' : 'معلومات' }}
+                                {{ (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin()) ? 'رابط' : 'معلومات' }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($galleries as $gallery)
-                            <tr
-                                class="bg-white border-b dark:bg-slate-900 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            <tr class="bg-white border-b dark:bg-slate-900 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
                                 <td class="px-6 py-4">
                                     <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->caption }}"
                                         class="w-20 h-20 object-cover rounded-lg shadow-sm border border-slate-100 dark:border-slate-600">
@@ -48,7 +46,7 @@
                                 </td>
 
                                 <td class="px-6 py-4">
-                                    @if (auth()->user()->isOrganizer())
+                                    @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                                         <div class="flex space-x-4">
                                             <a href="{{ route('galleries.edit', $gallery) }}"
                                                 class="font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition">Edit</a>
@@ -65,10 +63,8 @@
                                         </div>
                                     @else
                                         <div class="flex flex-col">
-                                            <span
-                                                class="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">صورة</span>
-                                            <span class="text-slate-500 dark:text-slate-400 text-xs">نشرت:
-                                                {{ $gallery->created_at->format('M d, Y') }}</span>
+                                            <span class="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">صورة</span>
+                                            <span class="text-slate-500 dark:text-slate-400 text-xs">نشرت: {{ $gallery->created_at->format('M d, Y') }}</span>
                                         </div>
                                     @endif
                                 </td>

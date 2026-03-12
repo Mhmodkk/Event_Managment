@@ -14,6 +14,11 @@ class Attending extends Model
         'user_id',
         'event_id',
         'num_tickets',
+        'guest_name',
+        'guest_phone',
+        'guest_email',
+        'attended_at',
+        'qr_scanned_by',
     ];
 
     public function user(): BelongsTo
