@@ -41,7 +41,6 @@ class EventController extends Controller
     {
         $data = $request->validated();
 
-        // رفع صورة الفعالية الأساسية
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('events', 'public');
         }
@@ -55,32 +54,25 @@ class EventController extends Controller
 
         $data['is_public'] = $request->boolean('is_public');
 
-        // إنشاء الفعالية أولاً للحصول على الـ ID
         $event = Event::create($data);
 
         if ($request->has('tags')) {
             $event->tags()->sync($request->tags);
         }
 
-        // --- كود توليد الـ QR Code المطور ---
-        // نستخدم امتداد .svg لتجنب مشاكل مكتبة Imagick و GD
         $qrPath = 'qrcodes/event-' . $event->id . '.svg';
 
-        // التأكد من وجود المجلد في الـ Storage
         if (!Storage::disk('public')->exists('qrcodes')) {
             Storage::disk('public')->makeDirectory('qrcodes');
         }
 
-        // توليد الكود وحفظه مباشرة في المسار
-        // الـ SVG لا يحتاج لتعريفات إضافية في php.ini
+
         QrCode::size(300)
-            ->style('round') // شكل نقاط دائري لإعطاء طابع عصري
+            ->style('round')
             ->margin(1)
             ->generate(route('eventShow', $event->id), storage_path('app/public/' . $qrPath));
 
-        // تحديث قاعدة البيانات بمسار الكود
         $event->update(['qr_code' => $qrPath]);
-        // -----------------------------------
 
         return redirect()->route('events.index')->with('success', 'تم إنشاء الفعالية بنجاح');
     }

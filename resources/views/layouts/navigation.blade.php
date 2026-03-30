@@ -4,8 +4,7 @@
             <div class="flex">
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('storage/logos/hpu-logo.png') }}" alt="HPU Logo"
-                            class="h-9 w-auto object-contain">
+                        <img src="{{ asset('storage/logos/HPU.png') }}" alt="HPU Logo" class="h-9 w-auto object-contain">
                     </a>
                 </div>
 
@@ -31,21 +30,26 @@
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Gallery') }}
                     </x-nav-link>
+                    @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
+                        <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')"
+                            class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
+                            {{ __('Liked') }}
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')"
-                        class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
-                        {{ __('Liked') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('savedEvents')" :active="request()->routeIs('savedEvents')"
-                        class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
-                        {{ __('Saved') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('attendingEvents')" :active="request()->routeIs('attendingEvents')"
-                        class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
-                        {{ __('Attending') }}
-                    </x-nav-link>
+                        <x-nav-link :href="route('savedEvents')" :active="request()->routeIs('savedEvents')"
+                            class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
+                            {{ __('Saved') }}
+                        </x-nav-link>
+                        {{-- هذه الروابط تظهر للطلاب فقط --}}
+                        <x-nav-link :href="route('attendingEvents')" :active="request()->routeIs('attendingEvents')"
+                            class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
+                            {{ __('Attending') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('my.bookings')" :active="request()->routeIs('my.bookings')"
+                            class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
+                            {{ __('My Booking') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

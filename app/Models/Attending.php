@@ -19,6 +19,16 @@ class Attending extends Model
         'guest_email',
         'attended_at',
         'qr_scanned_by',
+        'qr_token',
+        'qr_generated_at',
+        'qr_token',
+        'qr_path',
+        'qr_generated_at'
+    ];
+
+    protected $casts = [
+        'attended_at' => 'datetime',
+        'num_tickets' => 'integer',
     ];
 
     public function user(): BelongsTo
@@ -29,5 +39,40 @@ class Attending extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function scanner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'qr_scanned_by');
+    }
+
+    public function isGuest(): bool
+    {
+        return is_null($this->user_id);
+    }
+
+    public function hasAttended(): bool
+    {
+        return !is_null($this->attended_at);
+    }
+
+    public function getAttendeeNameAttribute(): ?string
+    {
+        if ($this->user) {
+            return $this->user->name;
+        }
+
+        return $this->guest_name ?? 'ضيف غير مسجل';
+    }
+
+    public function getAttendeeTypeAttribute(): string
+    {
+        if ($this->user) {
+            if ($this->user->isAdmin() || $this->user->isSuperAdmin()) {
+                return 'إداري';
+            }
+            return 'طالب';
+        }
+        return 'ضيف خارجي';
     }
 }

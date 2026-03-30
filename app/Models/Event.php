@@ -42,6 +42,21 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating()
+    {
+        return round($this->ratings()->avg('stars') ?? 0, 1);
+    }
+
+    public function ratingCount()
+    {
+        return $this->ratings()->count();
+    }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);

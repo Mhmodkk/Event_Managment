@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
 use App\Models\Faculty;
 use App\Models\Tag;
 use App\Models\User;
@@ -43,10 +44,20 @@ class DatabaseSeeder extends Seeder
             ['email' => 'ahmad@gmail.com'],
             [
                 'name'              => 'Ahmad',
-                'image'             => 'profiles/default-admin.jpg',
                 'faculty_id'        => 2,
                 'password'          => Hash::make('12345678'),
                 'role'              => 'admin',
+                'email_verified_at' => now(),
+                'remember_token'    => Str::random(10),
+            ]
+        );
+        User::firstOrCreate(
+            ['email' => 'ali@gmail.com'],
+            [
+                'name'              => 'Ali',
+                'faculty_id'        => 1,
+                'password'          => Hash::make('12345678'),
+                'role'              => 'super_admin',
                 'email_verified_at' => now(),
                 'remember_token'    => Str::random(10),
             ]
@@ -56,7 +67,6 @@ class DatabaseSeeder extends Seeder
             ['email' => 'mahmod@gmail.com'],
             [
                 'name'              => 'Mahmod',
-                'image'             => 'profiles/default-student.jpg',
                 'faculty_id'        => 2,
                 'password'          => Hash::make('12345678'),
                 'role'              => 'student',
@@ -64,5 +74,23 @@ class DatabaseSeeder extends Seeder
                 'remember_token'    => Str::random(10),
             ]
         );
+
+        Event::firstOrCreate([
+            'title' => 'ورشة عمل تصميم الأدوية',
+            'type' => 'workshop',
+            'slug' => Str::slug('ورشة عمل تصميم الأدوية'),
+            'description' => 'ورشة عمل عملية لتصميم وتطوير الأدوية الحديثة باستخدام برامج محاكاة.',
+            'location' => 'معمل الكيمياء الحيوية',
+            'excluded_days' => json_encode([]),
+            'is_public' => false,
+            'qr_code' => null,
+            'start_date' => '2026-03-15',
+            'end_date' => '2026-03-16',
+            'start_time' => '09:00:00',
+            'image' => "C:\Users\PC2025\Pictures\خلفيات\941898.jpg",
+            'num_tickets' => 40,
+            'user_id' => '1',
+            'faculty_id' => '2'
+        ]);
     }
 }

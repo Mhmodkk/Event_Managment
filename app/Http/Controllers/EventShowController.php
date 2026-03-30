@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventShowController extends Controller
 {
@@ -14,13 +14,33 @@ class EventShowController extends Controller
         $like = null;
         $savedEvent = null;
         $attending = null;
+        $qrCodeUrl = null;
+        $qrToken = null;
 
         if (auth()->check()) {
             $like = $event->likes()->where('user_id', auth()->id())->first();
             $savedEvent = $event->savedEvents()->where('user_id', auth()->id())->first();
-            $attending = $event->attendings()->where('user_id', auth()->id())->first();
+
+            $attending = $event->attendings()
+                ->where('user_id', auth()->id())
+                ->latest('created_at')
+                ->first();
+
+            if ($attending) {
+                if ($attending->qr_path) {
+                    $qrCodeUrl = Storage::url($attending->qr_path);
+                    $qrToken = $attending->qr_token;
+                }
+            }
         }
 
-        return view('eventsShow', compact('event', 'like', 'savedEvent', 'attending'));
+        return view('eventsShow', compact(
+            'event',
+            'like',
+            'savedEvent',
+            'attending',
+            'qrCodeUrl',
+            'qrToken'
+        ));
     }
 }
