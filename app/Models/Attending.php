@@ -69,7 +69,7 @@ class Attending extends Model
     {
         if ($this->user) {
             if ($this->user->isAdmin() || $this->user->isSuperAdmin()) {
-                return 'إداري';
+                return 'مشرف';
             }
             return 'طالب';
         }

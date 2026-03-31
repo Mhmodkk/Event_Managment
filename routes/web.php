@@ -77,6 +77,17 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('auth')->get('/my-bookings', [MyBookingsController::class, 'index'])->name('my.bookings');
 
+    Route::middleware(['auth', 'superadmin'])->get('/managment', [SuperAdminDashboardController::class, 'index'])
+        ->name('managment');
+    Route::middleware(['auth', 'admin'])->get('/scan', [EventScanController::class, 'index'])
+        ->name('scan');
+
+    Route::middleware(['auth', 'admin'])->get('/scan/{event}', [EventScanController::class, '__invoke'])
+        ->name('scan.event');
+
+    Route::middleware('auth')->post('/events/{event}/scan', ScanTicketController::class)
+        ->name('scan.ticket');
+
     Route::middleware('auth')->delete('/bookings/{attending}/cancel', [CancelBookingController::class, '__invoke'])->name('bookings.cancel');
     Route::middleware('auth')->post('/events/{event}/rate', [RatingController::class, 'store'])->name('events.rate');
 });

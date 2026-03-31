@@ -69,7 +69,7 @@
                                                 : ($user->isAdmin()
                                                     ? 'bg-blue-100 text-blue-700 border border-blue-200'
                                                     : 'bg-emerald-100 text-emerald-700 border border-emerald-200') }}">
-                                            {{ $user->isSuperAdmin() ? 'سوبر أدمن' : ($user->isAdmin() ? 'إداري' : 'طالب') }}
+                                            {{ $user->isSuperAdmin() ? 'مدير' : ($user->isAdmin() ? 'مشرف' : 'طالب') }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
@@ -85,9 +85,9 @@
                                                 <option value="student"
                                                     {{ $user->role === 'student' ? 'selected' : '' }}>طالب</option>
                                                 <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>
-                                                    إداري</option>
+                                                    مشرف</option>
                                                 <option value="super_admin"
-                                                    {{ $user->role === 'super_admin' ? 'selected' : '' }}>سوبر أدمن
+                                                    {{ $user->role === 'super_admin' ? 'selected' : '' }}> مدير
                                                 </option>
                                             </select>
                                         </form>

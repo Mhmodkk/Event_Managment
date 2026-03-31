@@ -117,10 +117,12 @@
                                     class="px-6 py-3 bg-slate-200 dark:bg-slate-700 dark:text-blue-400 hover:bg-slate-400 dark:hover:bg-slate-500 rounded-lg font-medium transition">
                                     إدارة المحتوى الخاص بي
                                 </a>
-                                <a href="{{ route('attendingEvents') }}"
-                                    class="px-6 py-3 border border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg font-medium transition">
-                                    تذاكري المحجوزة
-                                </a>
+                                @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
+                                    <a href="{{ route('attendingEvents') }}"
+                                        class="px-6 py-3 border border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg font-medium transition">
+                                        تذاكري المحجوزة
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endif

@@ -39,7 +39,6 @@ class AttendingSystemController extends Controller
             ], 422);
         }
 
-        // منع المدراء والسوبر أدمن من الحجز
         if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isSuperAdmin())) {
             return response()->json([
                 'status'  => 'error',
@@ -52,7 +51,6 @@ class AttendingSystemController extends Controller
         if (Auth::check()) {
             $userId = Auth::id();
 
-            // منع الحجز المكرر لنفس المستخدم
             if ($event->attendings()->where('user_id', $userId)->exists()) {
                 return response()->json([
                     'status'  => 'error',
@@ -65,7 +63,6 @@ class AttendingSystemController extends Controller
                 'num_tickets' => $requestedTickets,
             ]);
         } else {
-            // دعم الضيوف (مؤقتًا محظور للحجز المتعدد)
             return response()->json([
                 'status'  => 'error',
                 'message' => 'يجب تسجيل الدخول لحجز متعدد التذاكر'

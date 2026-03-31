@@ -30,6 +30,21 @@
                         class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
                         {{ __('Gallery') }}
                     </x-nav-link>
+                    @auth
+                        @if (auth()->user()->isSuperAdmin())
+                            <x-nav-link :href="route('managment')" :active="request()->routeIs('managment')"
+                                class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
+                                {{ __('Managment') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if (auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
+                            <x-nav-link :href="route('scan')" :active="request()->routeIs('scan')"
+                                class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">
+                                {{ __('Scan QR') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                     @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
                         <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')"
                             class="text-blue-700 hover:text-blue-700 dark:text-blue-700 dark:hover:text-blue-700">

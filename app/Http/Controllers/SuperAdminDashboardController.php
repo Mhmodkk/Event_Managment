@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Attending;
 use App\Models\Event;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class SuperAdminDashboardController extends Controller
 {
@@ -21,16 +19,14 @@ class SuperAdminDashboardController extends Controller
             ->orderBy('attendings_count', 'desc')
             ->take(5)
             ->get()
-            ->map(function ($event) {
-                return [
-                    'faculty' => $event->faculty->name ?? 'غير محدد',
-                    'bookings' => $event->attendings_count,
-                ];
-            });
+            ->map(fn($event) => [
+                'faculty' => $event->faculty->name ?? 'غير محدد',
+                'bookings' => $event->attendings_count,
+            ]);
 
         $recentUsers = User::latest()->take(5)->get();
-
         $users = User::latest()->paginate(15);
+        $totalUsers = User::count();
 
         return view('super-dashboard', compact(
             'totalEvents',
@@ -39,7 +35,8 @@ class SuperAdminDashboardController extends Controller
             'attendanceRate',
             'topFaculties',
             'recentUsers',
-            'users'
+            'users',
+            'totalUsers'
         ));
     }
 }

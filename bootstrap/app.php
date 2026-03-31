@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Middleware\RestrictToOrganizer;
 use App\Http\Middleware\SuperAdminMiddleware;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,11 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'admin' => RestrictToOrganizer::class,
-        ]);
+
         $middleware->alias([
             'superadmin' => SuperAdminMiddleware::class,
+            'admin' => AdminMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
