@@ -4,10 +4,10 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
             <div class="space-y-2">
                 <h1
-                    class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-blue-600 tracking-tight">
+                    class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#355872] dark:text-[#DFD0B8] tracking-tight">
                     {{ $event->title }}
                 </h1>
-                <div class="flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-medium text-lg">
+                <div class="flex items-center gap-3 text-[#7AAACE] dark:text-[#7AAACE] font-medium text-lg">
                     <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -21,7 +21,7 @@
                 @auth
                     @if (auth()->id() === $event->user_id || auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                         <a href="{{ route('events.attendance', $event->id) }}"
-                            class="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+                            class="inline-flex items-center px-7 py-3.5 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
                             <svg class="w-5 h-5 mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -35,7 +35,7 @@
                             <!-- Like -->
                             <button @click="toggle('like')"
                                 :class="liked ? 'bg-red-500 text-white shadow-red-300/50' :
-                                    'bg-gray-200/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300'"
+                                    'bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8]'"
                                 class="p-3.5 rounded-full transition-all duration-300 hover:scale-110 shadow-md hover:shadow-lg">
                                 <svg class="w-7 h-7" :fill="liked ? 'currentColor' : 'none'" stroke="currentColor"
                                     viewBox="0 0 24 24">
@@ -47,7 +47,7 @@
                             <!-- Save -->
                             <button @click="toggle('save')"
                                 :class="saved ? 'bg-amber-500 text-white shadow-amber-300/50' :
-                                    'bg-gray-200/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300'"
+                                    'bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8]'"
                                 class="p-3.5 rounded-full transition-all duration-300 hover:scale-110 shadow-md hover:shadow-lg">
                                 <svg class="w-7 h-7" :fill="saved ? 'currentColor' : 'none'" stroke="currentColor"
                                     viewBox="0 0 24 24">
@@ -58,8 +58,7 @@
 
                             <!-- Attend -->
                             <button @click="toggle('attending')"
-                                :class="attending ? 'bg-emerald-600 text-white shadow-emerald-300/50' :
-                                    'bg-indigo-600 text-white shadow-indigo-300/50'"
+                                :class="attending ? 'bg-[#7AAACE] text-white' : 'bg-[#7AAACE] text-white'"
                                 class="px-8 py-3.5 rounded-xl font-bold text-base shadow-xl transition-all duration-300 hover:opacity-95 hover:scale-[1.03]">
                                 <span x-text="attending ? '✓ مشارك' : 'احجز مكاني'"></span>
                             </button>
@@ -79,7 +78,7 @@
                         alt="{{ $event->title }}">
                     <div class="absolute top-6 left-6">
                         <span
-                            class="bg-indigo-600/95 backdrop-blur-sm text-white px-5 py-2.5 rounded-xl text-base font-bold uppercase tracking-wide shadow-lg">
+                            class="bg-[#7AAACE] backdrop-blur-sm text-white px-5 py-2.5 rounded-xl text-base font-bold uppercase tracking-wide shadow-lg">
                             {{ $event->faculty->name }}
                         </span>
                     </div>
@@ -87,41 +86,43 @@
 
                 <!-- Details -->
                 <div
-                    class="bg-white dark:bg-gray-800/95 p-8 lg:p-10 rounded-3xl shadow-xl border border-gray-100/50 dark:border-gray-700/50">
-                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">تفاصيل الفعالية</h2>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-10">
+                    class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 lg:p-10 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
+                    <h2 class="text-3xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6">تفاصيل الفعالية</h2>
+                    <p class="text-[#948979] dark:text-[#948979] leading-relaxed text-lg mb-10">
                         {{ $event->description }}
                     </p>
 
                     <div
-                        class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                        class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-[#9CD5FF] dark:border-[#948979]">
                         <div class="space-y-2">
-                            <h3 class="font-semibold text-gray-900 dark:text-white text-lg">نوع الفعالية</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base">
+                            <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-lg">نوع الفعالية</h3>
+                            <p class="text-[#948979] dark:text-[#948979] text-base">
                                 {{ ucfirst($event->type ?? 'غير محدد') }}</p>
                         </div>
 
                         <div class="space-y-2">
-                            <h3 class="font-semibold text-gray-900 dark:text-white text-lg">المكان</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base">{{ $event->location ?? 'غير محدد' }}
+                            <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-lg">المكان</h3>
+                            <p class="text-[#948979] dark:text-[#948979] text-base">
+                                {{ $event->location ?? 'غير محدد' }}
                             </p>
                         </div>
 
                         <div class="space-y-2">
-                            <h3 class="font-semibold text-gray-900 dark:text-white text-lg">مفتوحة للجمهور</h3>
-                            <p class="text-gray-700 dark:text-gray-300 text-base font-medium">
+                            <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-lg">مفتوحة للجمهور</h3>
+                            <p class="text-[#948979] dark:text-[#948979] text-base font-medium">
                                 {{ $event->is_public ? 'نعم – مفتوحة للجميع' : 'لا – داخلية فقط' }}
                             </p>
                         </div>
 
                         @if ($event->excluded_days && count(json_decode($event->excluded_days, true)) > 0)
                             <div class="md:col-span-2 space-y-3">
-                                <h3 class="font-semibold text-gray-900 dark:text-white text-lg">أيام العطل المستثناة
+                                <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-lg">أيام العطل
+                                    المستثناة
                                 </h3>
                                 <div class="flex flex-wrap gap-3">
                                     @foreach (json_decode($event->excluded_days, true) as $day)
                                         <span
-                                            class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700/60 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium shadow-sm">
+                                            class="px-5 py-2.5 bg-[#9CD5FF] dark:bg-[#948979] text-[#355872] dark:text-[#222831] rounded-full text-sm font-medium shadow-sm">
                                             {{ \Carbon\Carbon::parse($day)->format('d/m/Y') }}
                                         </span>
                                     @endforeach
@@ -131,12 +132,12 @@
                     </div>
 
                     @if ($event->tags->isNotEmpty())
-                        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-                            <h3 class="font-semibold text-gray-900 dark:text-white text-lg mb-4">التصنيفات</h3>
+                        <div class="mt-12 pt-8 border-t border-[#9CD5FF] dark:border-[#948979]">
+                            <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-lg mb-4">التصنيفات</h3>
                             <div class="flex flex-wrap gap-3">
                                 @foreach ($event->tags as $tag)
                                     <span
-                                        class="px-5 py-2.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-sm font-medium shadow-sm">
+                                        class="px-5 py-2.5 bg-[#9CD5FF] dark:bg-[#948979] text-[#355872] dark:text-[#222831] rounded-full text-sm font-medium shadow-sm">
                                         #{{ $tag->name }}
                                     </span>
                                 @endforeach
@@ -148,16 +149,16 @@
                 <!-- Comments -->
                 @auth
                     <div
-                        class="bg-white dark:bg-gray-800/95 p-8 lg:p-10 rounded-3xl shadow-xl border border-gray-100/50 dark:border-gray-700/50">
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">التعليقات</h2>
+                        class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 lg:p-10 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
+                        <h2 class="text-3xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-8">التعليقات</h2>
 
                         <form action="{{ route('events.comments', $event->id) }}" method="POST" class="mb-10">
                             @csrf
                             <div class="flex flex-col sm:flex-row gap-4">
                                 <input type="text" name="content" placeholder="أضف تعليقك هنا..."
-                                    class="flex-1 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-2xl px-6 py-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-base">
+                                    class="flex-1 bg-[#F7F8F0] dark:bg-[#393E46] border border-[#9CD5FF] dark:border-[#948979] text-[#355872] dark:text-[#DFD0B8] rounded-2xl px-6 py-4 focus:ring-2 focus:ring-[#7AAACE] focus:border-[#7AAACE] outline-none transition text-base">
                                 <button type="submit"
-                                    class="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] text-base">
+                                    class="px-10 py-4 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] text-base">
                                     إرسال
                                 </button>
                             </div>
@@ -165,21 +166,21 @@
 
                         <div class="space-y-6">
                             @forelse($event->comments()->latest()->get() as $comment)
-                                <div class="bg-gray-50 dark:bg-gray-700/40 p-6 rounded-2xl shadow-sm">
+                                <div class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-2xl shadow-sm">
                                     <div class="flex items-start justify-between gap-5">
                                         <div class="flex items-center gap-4 rtl:flex-row-reverse">
                                             <div
-                                                class="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center flex-shrink-0">
-                                                <svg class="w-7 h-7 text-indigo-600 dark:text-indigo-400"
-                                                    fill="currentColor" viewBox="0 0 24 24">
+                                                class="w-12 h-12 rounded-full bg-[#9CD5FF] dark:bg-[#948979] flex items-center justify-center flex-shrink-0">
+                                                <svg class="w-7 h-7 text-[#355872] dark:text-[#222831]" fill="currentColor"
+                                                    viewBox="0 0 24 24">
                                                     <path
                                                         d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-gray-900 dark:text-white text-base">
+                                                <h4 class="font-bold text-[#355872] dark:text-[#DFD0B8] text-base">
                                                     {{ $comment->user->name }}</h4>
-                                                <p class="mt-2 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                                <p class="mt-2 text-[#948979] dark:text-[#948979] leading-relaxed">
                                                     {{ $comment->content }}</p>
                                             </div>
                                         </div>
@@ -197,7 +198,7 @@
                                     </div>
                                 </div>
                             @empty
-                                <p class="text-center text-gray-500 dark:text-gray-400 py-12 text-lg font-medium">
+                                <p class="text-center text-[#948979] dark:text-[#948979] py-12 text-lg font-medium">
                                     لا توجد تعليقات بعد. كن أول من يعلق!
                                 </p>
                             @endforelse
@@ -209,14 +210,14 @@
             <!-- Sidebar -->
             <div class="space-y-8 lg:space-y-10">
 
-                <!-- تقييمات الفعالية - القسم الجديد -->
+                <!-- تقييمات الفعالية -->
                 <div
-                    class="bg-white dark:bg-gray-800/95 p-8 rounded-3xl shadow-xl border border-gray-100/50 dark:border-gray-700/50">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                    class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
+                    <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6 flex items-center gap-3">
                         تقييمات الفعالية
                         @if ($event->ratingCount() > 0)
                             <span
-                                class="text-sm font-normal text-gray-500 dark:text-gray-400">({{ $event->ratingCount() }})</span>
+                                class="text-sm font-normal text-[#948979] dark:text-[#948979]">({{ $event->ratingCount() }})</span>
                         @endif
                     </h3>
 
@@ -231,17 +232,17 @@
                                             class="{{ $i <= round($event->averageRating()) ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600' }}">★</span>
                                     @endfor
                                 </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">متوسط التقييم</p>
+                                <p class="text-sm text-[#948979] dark:text-[#948979]">متوسط التقييم</p>
                             </div>
                         </div>
 
-                        <!-- آخر تقييمين -->
                         @foreach ($event->ratings()->with('user')->latest()->take(2)->get() as $rating)
                             <div
-                                class="border-t border-gray-200 dark:border-gray-700 pt-6 first:border-t-0 first:pt-0">
+                                class="border-t border-[#9CD5FF] dark:border-[#948979] pt-6 first:border-t-0 first:pt-0">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <p class="font-medium text-gray-900 dark:text-white">{{ $rating->user->name }}
+                                        <p class="font-medium text-[#355872] dark:text-[#DFD0B8]">
+                                            {{ $rating->user->name }}
                                         </p>
                                         <div class="flex text-amber-400 text-lg mt-1">
                                             @for ($i = 1; $i <= $rating->stars; $i++)
@@ -250,10 +251,10 @@
                                         </div>
                                     </div>
                                     <span
-                                        class="text-xs text-gray-500 dark:text-gray-400">{{ $rating->created_at->diffForHumans() }}</span>
+                                        class="text-xs text-[#948979] dark:text-[#948979]">{{ $rating->created_at->diffForHumans() }}</span>
                                 </div>
                                 @if ($rating->comment)
-                                    <p class="mt-3 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                                    <p class="mt-3 text-[#948979] dark:text-[#948979] text-sm leading-relaxed">
                                         "{{ $rating->comment }}"
                                     </p>
                                 @endif
@@ -261,12 +262,12 @@
                         @endforeach
 
                         @if ($event->ratingCount() > 2)
-                            <p class="text-center text-sm text-indigo-600 dark:text-indigo-400 mt-6">
+                            <p class="text-center text-sm text-[#7AAACE] dark:text-[#7AAACE] mt-6">
                                 +{{ $event->ratingCount() - 2 }} تقييم آخر
                             </p>
                         @endif
                     @else
-                        <div class="text-center py-12 text-gray-500 dark:text-gray-400">
+                        <div class="text-center py-12 text-[#948979] dark:text-[#948979]">
                             <p class="text-lg">لم يقيّم أحد هذه الفعالية بعد</p>
                             <p class="text-sm mt-2">كن أول من يقيّم بعد حضورك!</p>
                         </div>
@@ -275,10 +276,10 @@
 
                 <!-- Location -->
                 <div
-                    class="bg-white dark:bg-gray-800/95 p-8 rounded-3xl shadow-xl border border-gray-100/50 dark:border-gray-700/50">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">تفاصيل المكان</h3>
+                    class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
+                    <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6">تفاصيل المكان</h3>
                     <div class="flex items-start gap-5">
-                        <svg class="w-8 h-8 text-indigo-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+                        <svg class="w-8 h-8 text-[#7AAACE] flex-shrink-0 mt-1" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -286,20 +287,20 @@
                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         <div class="space-y-2">
-                            <p class="font-bold text-xl text-gray-900 dark:text-white">
+                            <p class="font-bold text-xl text-[#355872] dark:text-[#DFD0B8]">
                                 {{ $event->location ?? 'غير محدد' }}</p>
-                            <p class="text-gray-600 dark:text-gray-400">{{ $event->faculty->name }}</p>
+                            <p class="text-[#948979] dark:text-[#948979]">{{ $event->faculty->name }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Organizer -->
                 <div
-                    class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/40 dark:to-blue-950/40 p-8 rounded-3xl border border-indigo-100 dark:border-indigo-900/50 shadow-xl">
-                    <h3 class="text-xl font-bold text-indigo-900 dark:text-indigo-300 mb-4">منظم الفعالية</h3>
-                    <p class="text-indigo-800 dark:text-indigo-300 text-lg">
+                    class="bg-[#9CD5FF] dark:bg-[#948979] p-8 rounded-3xl border border-[#7AAACE] dark:border-[#DFD0B8] shadow-xl">
+                    <h3 class="text-xl font-bold text-[#355872] dark:text-[#222831] mb-4">منظم الفعالية</h3>
+                    <p class="text-[#355872] dark:text-[#222831] text-lg">
                         بواسطة: <span
-                            class="font-extrabold text-indigo-950 dark:text-indigo-200">{{ $event->user->name }}</span>
+                            class="font-extrabold text-[#355872] dark:text-[#222831]">{{ $event->user->name }}</span>
                     </p>
                 </div>
 
@@ -307,21 +308,21 @@
                 @auth
                     @if ($attending && $qrCodeUrl)
                         <div
-                            class="bg-white dark:bg-gray-800/95 p-8 rounded-3xl shadow-xl border border-gray-100/50 dark:border-gray-700/50 text-center">
-                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">رمز الحضور الخاص بك</h3>
+                            class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979] text-center">
+                            <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6">رمز الحضور الخاص بك</h3>
                             <div
-                                class="inline-block p-5 bg-white dark:bg-gray-900 rounded-2xl shadow-inner border-2 border-emerald-400/30">
+                                class="inline-block p-5 bg-white dark:bg-[#222831] rounded-2xl shadow-inner border-2 border-[#7AAACE]">
                                 <img src="{{ $qrCodeUrl }}" alt="رمز QR لحضورك"
                                     class="w-56 h-56 md:w-64 md:h-64 object-contain mx-auto">
                             </div>
-                            <p class="mt-6 text-gray-600 dark:text-gray-400 text-base">
+                            <p class="mt-6 text-[#948979] dark:text-[#948979] text-base">
                                 امسح هذا الكود عند الوصول لتسجيل حضورك
                             </p>
                         </div>
                     @elseif (!$attending)
                         <div
-                            class="bg-yellow-50 dark:bg-yellow-900/30 p-8 rounded-3xl text-center border border-yellow-200 dark:border-yellow-800">
-                            <p class="text-lg font-medium text-yellow-800 dark:text-yellow-300">
+                            class="bg-[#9CD5FF] dark:bg-[#948979] p-8 rounded-3xl text-center border border-[#7AAACE] dark:border-[#DFD0B8]">
+                            <p class="text-lg font-medium text-[#355872] dark:text-[#222831]">
                                 احجز مكانك أولاً ليظهر رمز QR الخاص بك
                             </p>
                         </div>
@@ -331,36 +332,36 @@
                 <!-- قسم الحجز متعدد التذاكر -->
                 @if ($event->num_tickets > 0)
                     <div
-                        class="bg-white dark:bg-gray-800/95 p-8 rounded-3xl shadow-xl border border-gray-100/50 dark:border-gray-700/50">
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">احجز مقعدك الآن</h3>
+                        class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
+                        <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6">احجز مقعدك الآن</h3>
 
                         <form id="attending-form" class="space-y-6">
                             @csrf
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label class="block text-sm font-medium text-[#948979] dark:text-[#948979] mb-2">
                                     عدد التذاكر
                                 </label>
                                 <div class="flex items-center gap-4">
                                     <button type="button" onclick="changeTickets(-1)"
-                                        class="w-12 h-12 flex items-center justify-center text-2xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl transition">-</button>
+                                        class="w-12 h-12 flex items-center justify-center text-2xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-xl transition">-</button>
 
                                     <input type="number" id="num_tickets" name="num_tickets" value="1"
                                         min="1" max="10"
-                                        class="w-24 text-center text-3xl font-bold bg-transparent border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 py-3">
+                                        class="w-24 text-center text-3xl font-bold bg-transparent border border-[#9CD5FF] dark:border-[#948979] rounded-xl focus:ring-2 focus:ring-[#7AAACE] focus:border-[#7AAACE] py-3">
 
                                     <button type="button" onclick="changeTickets(1)"
-                                        class="w-12 h-12 flex items-center justify-center text-2xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl transition">+</button>
+                                        class="w-12 h-12 flex items-center justify-center text-2xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-xl transition">+</button>
                                 </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                                    متبقي: <span id="remaining-tickets" class="font-semibold text-green-600">
+                                <p class="text-sm text-[#948979] dark:text-[#948979] mt-2">
+                                    متبقي: <span id="remaining-tickets" class="font-semibold text-[#7AAACE]">
                                         {{ $event->num_tickets }}
                                     </span> مقعد
                                 </p>
                             </div>
 
                             <button type="button" onclick="submitAttending()"
-                                class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition text-lg">
+                                class="w-full py-4 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-2xl transition text-lg">
                                 حجز <span id="ticket-count">1</span> تذكرة
                             </button>
                         </form>
@@ -374,10 +375,8 @@
 
                 <!-- Guest Form -->
                 @if ($event->is_public && !auth()->check())
-                    <!-- باقي كود الضيف كما هو عندك بدون تغيير -->
                     <div
-                        class="bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-50 dark:from-blue-950/40 dark:via-indigo-950/40 dark:to-blue-950/40 p-8 lg:p-10 rounded-3xl border border-blue-100 dark:border-blue-900/50 shadow-2xl">
-                        <!-- ... كود الضيف الخاص بك ... -->
+                        class="bg-[#9CD5FF] dark:bg-[#948979] p-8 lg:p-10 rounded-3xl border border-[#7AAACE] dark:border-[#DFD0B8] shadow-2xl">
                     </div>
                 @endif
             </div>
@@ -387,23 +386,23 @@
     <!-- مودال النجاح -->
     <div id="qrSuccessModal"
         class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl max-w-md w-full text-center relative shadow-2xl">
+        <div class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-2xl max-w-md w-full text-center relative shadow-2xl">
             <button onclick="document.getElementById('qrSuccessModal').classList.add('hidden')"
-                class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-4xl font-bold leading-none">×</button>
+                class="absolute top-4 right-4 text-[#948979] hover:text-[#355872] text-4xl font-bold leading-none">×</button>
 
-            <h3 class="text-3xl font-bold text-green-600 dark:text-green-400 mb-6">شكراً لحجزك!</h3>
-            <p class="text-gray-700 dark:text-gray-300 mb-6 text-lg">امسح هذا الرمز عند الوصول لتسجيل حضورك</p>
+            <h3 class="text-3xl font-bold text-[#7AAACE] dark:text-[#7AAACE] mb-6">شكراً لحجزك!</h3>
+            <p class="text-[#948979] dark:text-[#948979] mb-6 text-lg">امسح هذا الرمز عند الوصول لتسجيل حضورك</p>
 
             <img id="qrSuccessImage" src="" alt="رمز الحضور QR"
-                class="mx-auto w-64 h-64 object-contain border-4 border-green-500 rounded-xl shadow-lg">
-            <p class="mt-6 text-sm text-gray-600 dark:text-gray-400"><strong id="qrSuccessToken"
+                class="mx-auto w-64 h-64 object-contain border-4 border-[#7AAACE] rounded-xl shadow-lg">
+            <p class="mt-6 text-sm text-[#948979] dark:text-[#948979]"><strong id="qrSuccessToken"
                     class="font-mono break-all"></strong></p>
         </div>
     </div>
 
 </x-main-layout>
 
-<!-- Scripts -->
+<!-- Scripts (باقية كما هي بدون أي تغيير) -->
 <script>
     let currentTickets = 1;
     const maxTickets = 10;

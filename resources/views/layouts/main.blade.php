@@ -30,7 +30,7 @@
 
         @include('layouts.main-navigation')
 
-        <main class="bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] min-h-screen">
+        <main class="bg-[#F7F8F0] dark:bg-[#222831] text-[#355872] dark:text-[#DFD0B8] min-h-screen">
             {{ $slot }}
         </main>
     </div>

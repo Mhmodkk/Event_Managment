@@ -1,22 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-blue-700 leading-tight">
+        <h2 class="font-semibold text-xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
             سجل حضورك في - {{ $event->title }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-[#F7F8F0] dark:bg-[#393E46] overflow-hidden shadow-sm sm:rounded-lg p-6">
 
                 <div id="result" class="mb-8 p-6 rounded-xl text-center text-lg font-medium hidden">
                 </div>
 
                 <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                    <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">
                         ؟ QR جاهز لمسح رمز
                     </h3>
-                    <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    <p class="mt-2 text-[#948979] dark:text-[#948979]">
                         وجه الكاميرا نحو رمزك الخاص بالمشاركة
                     </p>
                 </div>
@@ -34,12 +34,12 @@
 
         function showResult(status, message, details = {}) {
             resultDiv.classList.remove('hidden');
-            let bgClass = 'bg-gray-100 dark:bg-gray-700';
-            let textClass = 'text-gray-800 dark:text-gray-200';
+            let bgClass = 'bg-[#F7F8F0] dark:bg-[#393E46]';
+            let textClass = 'text-[#948979] dark:text-[#948979]';
 
             if (status === 'success') {
-                bgClass = 'bg-green-100 dark:bg-green-900/40 border border-green-500';
-                textClass = 'text-green-800 dark:text-green-300';
+                bgClass = 'bg-[#7AAACE]/10 dark:bg-[#7AAACE]/20 border border-[#7AAACE]';
+                textClass = 'text-[#355872] dark:text-[#DFD0B8]';
             } else if (status === 'warning') {
                 bgClass = 'bg-yellow-100 dark:bg-yellow-900/40 border border-yellow-500';
                 textClass = 'text-yellow-800 dark:text-yellow-300';
@@ -87,7 +87,7 @@
             html5QrCode.stop().then(() => {
                 console.log("Scanner stopped");
 
-                resultDiv.innerHTML = '<p class="text-blue-600 dark:text-blue-400">جاري التحقق...</p>';
+                resultDiv.innerHTML = '<p class="text-[#7AAACE] dark:text-[#7AAACE]">جاري التحقق...</p>';
                 resultDiv.classList.remove('hidden');
 
                 axios.post('{{ route('scan.ticket', $event->id) }}', {
@@ -167,7 +167,7 @@
                             ${err.name === 'NotAllowedError' ? 'يرجى السماح بالوصول إلى الكاميرا' : ''}
                             ${err.name === 'NotFoundError' ? 'لا يوجد كاميرا متاحة' : err.message || 'حدث خطأ غير متوقع'}
                         </small>
-                        <button onclick="location.reload()" class="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        <button onclick="location.reload()" class="mt-6 px-6 py-3 bg-[#7AAACE] text-white rounded-lg hover:bg-[#9CD5FF]">
                             إعادة المحاولة
                         </button>
                     </div>

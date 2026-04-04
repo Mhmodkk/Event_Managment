@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
                 إدارة الحضور - {{ $event->title }}
             </h2>
-            <div class="text-sm text-gray-600 dark:text-gray-400">
+            <div class="text-sm text-[#948979] dark:text-[#948979]">
                 التذاكر المتبقية: <strong>{{ $remainingTickets }}</strong> / {{ $event->num_tickets }}
             </div>
     </x-slot>
@@ -14,19 +14,19 @@
             <!-- إحصائيات سريعة -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div
-                    class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700 text-center">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">إجمالي الحجوزات</p>
-                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">{{ $totalBooked }}</p>
+                    class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-xl shadow border border-[#9CD5FF] dark:border-[#948979] text-center">
+                    <p class="text-sm text-[#948979] dark:text-[#948979]">إجمالي الحجوزات</p>
+                    <p class="text-3xl font-bold text-[#7AAACE] dark:text-[#7AAACE]">{{ $totalBooked }}</p>
                 </div>
                 <div
-                    class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700 text-center">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">الحاضرون فعلياً</p>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400">{{ $totalAttended }}</p>
+                    class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-xl shadow border border-[#9CD5FF] dark:border-[#948979] text-center">
+                    <p class="text-sm text-[#948979] dark:text-[#948979]">الحاضرون فعلياً</p>
+                    <p class="text-3xl font-bold text-[#7AAACE] dark:text-[#7AAACE]">{{ $totalAttended }}</p>
                 </div>
                 <div
-                    class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700 text-center">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">نسبة الحضور</p>
-                    <p class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+                    class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-xl shadow border border-[#9CD5FF] dark:border-[#948979] text-center">
+                    <p class="text-sm text-[#948979] dark:text-[#948979]">نسبة الحضور</p>
+                    <p class="text-3xl font-bold text-[#7AAACE] dark:text-[#7AAACE]">
                         {{ $totalBooked > 0 ? round(($totalAttended / $totalBooked) * 100) : 0 }}%
                     </p>
                 </div>
@@ -34,49 +34,49 @@
 
             <!-- جدول الحضور -->
             <div
-                class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg border border-gray-200 dark:border-gray-700">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-900">
+                class="bg-[#F7F8F0] dark:bg-[#393E46] shadow overflow-hidden sm:rounded-lg border border-[#9CD5FF] dark:border-[#948979]">
+                <table class="min-w-full divide-y divide-[#9CD5FF] dark:divide-[#948979]">
+                    <thead class="bg-[#9CD5FF] dark:bg-[#222831]">
                         <tr>
                             <th
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-xs font-medium text-[#948979] dark:text-[#948979] uppercase tracking-wider">
                                 الاسم</th>
                             <th
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-xs font-medium text-[#948979] dark:text-[#948979] uppercase tracking-wider">
                                 النوع</th>
                             <th
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-xs font-medium text-[#948979] dark:text-[#948979] uppercase tracking-wider">
                                 عدد التذاكر</th>
                             <th
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-xs font-medium text-[#948979] dark:text-[#948979] uppercase tracking-wider">
                                 حالة الحضور</th>
                             <th
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-xs font-medium text-[#948979] dark:text-[#948979] uppercase tracking-wider">
                                 مسح بواسطة</th>
                             <th
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-xs font-medium text-[#948979] dark:text-[#948979] uppercase tracking-wider">
                                 تاريخ التأكيد</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    <tbody class="bg-[#F7F8F0] dark:bg-[#393E46] divide-y divide-[#9CD5FF] dark:divide-[#948979]">
                         @forelse ($attendings as $attending)
                             <tr>
                                 <td
-                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
+                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-[#355872] dark:text-[#DFD0B8]">
                                     {{ $attending->attendee_name }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-[#948979] dark:text-[#948979]">
                                     {{ $attending->attendee_type }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-[#948979] dark:text-[#948979]">
                                     {{ $attending->num_tickets }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
                                     @if ($attending->hasAttended())
                                         <span
-                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#7AAACE]/20 text-[#355872] border border-[#7AAACE]/30">
                                             حاضر
                                         </span>
                                     @else
@@ -87,17 +87,17 @@
                                     @endif
                                 </td>
                                 <td
-                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-[#948979] dark:text-[#948979]">
                                     {{ $attending->scanner?->name ?? '-' }}
                                 </td>
                                 <td
-                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                    class="px-6 py-4 whitespace-nowrap text-right text-sm text-[#948979] dark:text-[#948979]">
                                     {{ $attending->attended_at ? $attending->attended_at->format('Y-m-d H:i') : '-' }}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="6" class="px-6 py-10 text-center text-[#948979] dark:text-[#948979]">
                                     لا يوجد حجوزات حتى الآن
                                 </td>
                             </tr>

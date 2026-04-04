@@ -31,14 +31,14 @@
         @include('layouts.navigation')
 
         @isset($header)
-            <header class="bg-[var(--color-bg-card)] shadow border-b border-[var(--color-border)]">
+            <header class="bg-[#F7F8F0] dark:bg-[#393E46] shadow border-b border-[#9CD5FF] dark:border-[#948979]">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
         @endisset
 
-        <main class="bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] min-h-screen">
+        <main class="bg-[#F7F8F0] dark:bg-[#222831] text-[#355872] dark:text-[#DFD0B8] min-h-screen">
             {{ $slot }}
         </main>
     </div>

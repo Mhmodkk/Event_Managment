@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('auth')->get('/my-bookings', [MyBookingsController::class, 'index'])->name('my.bookings');
 
-    Route::middleware(['auth', 'superadmin'])->get('/managment', [SuperAdminDashboardController::class, 'index'])
+    Route::middleware(['auth', 'superadmin'])->get('/managment', SuperAdminDashboardController::class)
         ->name('managment');
     Route::middleware(['auth', 'admin'])->get('/scan', [EventScanController::class, 'index'])
         ->name('scan');

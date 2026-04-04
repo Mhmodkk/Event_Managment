@@ -29,7 +29,7 @@
     if (darkMode) document.documentElement.classList.add('dark');" x-bind:class="{ 'dark': darkMode }">
 
         <div
-            class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[var(--color-bg-primary)]">
+            class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#F7F8F0] dark:bg-[#222831]">
             <div class="mb-8">
                 <a href="/">
                     <img src="{{ asset('storage/logos/HPU.png') }}" alt="HPU Logo" class="w-24 h-auto object-contain">
@@ -37,7 +37,7 @@
             </div>
 
             <div
-                class="w-full sm:max-w-md px-6 py-8 bg-[var(--color-bg-card)] shadow-xl rounded-xl border border-[var(--color-border)]">
+                class="w-full sm:max-w-md px-6 py-8 bg-[#F7F8F0] dark:bg-[#393E46] shadow-xl rounded-xl border border-[#9CD5FF] dark:border-[#948979]">
                 {{ $slot }}
             </div>
         </div>
