@@ -3,7 +3,7 @@ FROM node:20 AS frontend
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --ignore-scripts
+RUN npm install --ignore-scripts
 
 COPY . .
 RUN npm run build
@@ -35,9 +35,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY --from=frontend /app/public/build ./public/build
-
 COPY . .
+
+COPY --from=frontend /app/public/build ./public/build
 
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd
 
