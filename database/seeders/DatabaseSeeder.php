@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Event;
 use App\Models\Faculty;
 use App\Models\Tag;
 use App\Models\User;
@@ -75,22 +74,40 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        Event::firstOrCreate([
-            'title' => 'ورشة عمل تصميم الأدوية',
-            'type' => 'workshop',
-            'slug' => Str::slug('ورشة عمل تصميم الأدوية'),
-            'description' => 'ورشة عمل عملية لتصميم وتطوير الأدوية الحديثة باستخدام برامج محاكاة.',
-            'location' => 'معمل الكيمياء الحيوية',
-            'excluded_days' => json_encode([]),
-            'is_public' => false,
-            'qr_code' => null,
-            'start_date' => '2026-03-15',
-            'end_date' => '2026-03-16',
-            'start_time' => '09:00:00',
-            'image' => "C:\Users\PC2025\Pictures\خلفيات\941898.jpg",
-            'num_tickets' => 40,
-            'user_id' => '1',
-            'faculty_id' => '2'
-        ]);
+        User::firstOrCreate(
+            ['email' => 'AmrStudent@gmail.com'],
+            [
+                'name'              => 'Amr',
+                'faculty_id'        => 2,
+                'password'          => Hash::make('12345678'),
+                'role'              => 'student',
+                'email_verified_at' => now(),
+                'remember_token'    => Str::random(10),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'AmrAdmin@gmail.com'],
+            [
+                'name'              => 'Amr',
+                'faculty_id'        => 2,
+                'password'          => Hash::make('12345678'),
+                'role'              => 'admin',
+                'email_verified_at' => now(),
+                'remember_token'    => Str::random(10),
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'AmrManager@gmail.com'],
+            [
+                'name'              => 'Amr',
+                'faculty_id'        => 2,
+                'password'          => Hash::make('12345678'),
+                'role'              => 'super_admin',
+                'email_verified_at' => now(),
+                'remember_token'    => Str::random(10),
+            ]
+        );
     }
 }
