@@ -329,49 +329,51 @@
                     @endif
                 @endauth
 
-                <!-- قسم الحجز متعدد التذاكر -->
-                @if ($event->num_tickets > 0)
-                    <div
-                        class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
-                        <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6">احجز مقعدك الآن</h3>
+                <!--قسم الحجز متعدد التذاكر-->
+                @auth
+                    @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin() && $event->is_public && $event->num_tickets > 0)
+                        <div
+                            class="bg-[#F7F8F0] dark:bg-[#393E46] p-8 rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979]">
+                            <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-6">احجز مقعدك الآن</h3>
 
-                        <form id="attending-form" class="space-y-6">
-                            @csrf
+                            <form id="attending-form" class="space-y-6">
+                                @csrf
 
-                            <div>
-                                <label class="block text-sm font-medium text-[#948979] dark:text-[#948979] mb-2">
-                                    عدد التذاكر
-                                </label>
-                                <div class="flex items-center gap-4">
-                                    <button type="button" onclick="changeTickets(-1)"
-                                        class="w-12 h-12 flex items-center justify-center text-2xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-xl transition">-</button>
+                                <div>
+                                    <label class="block text-sm font-medium text-[#948979] dark:text-[#948979] mb-2">
+                                        عدد التذاكر
+                                    </label>
+                                    <div class="flex items-center gap-4">
+                                        <button type="button" onclick="changeTickets(-1)"
+                                            class="w-12 h-12 flex items-center justify-center text-2xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-xl transition">-</button>
 
-                                    <input type="number" id="num_tickets" name="num_tickets" value="1"
-                                        min="1" max="10"
-                                        class="w-24 text-center text-3xl font-bold bg-transparent border border-[#9CD5FF] dark:border-[#948979] rounded-xl focus:ring-2 focus:ring-[#7AAACE] focus:border-[#7AAACE] py-3">
+                                        <input type="number" id="num_tickets" name="num_tickets" value="1"
+                                            min="1" max="10"
+                                            class="w-24 text-center text-3xl font-bold bg-transparent border border-[#9CD5FF] dark:border-[#948979] rounded-xl focus:ring-2 focus:ring-[#7AAACE] focus:border-[#7AAACE] py-3">
 
-                                    <button type="button" onclick="changeTickets(1)"
-                                        class="w-12 h-12 flex items-center justify-center text-2xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-xl transition">+</button>
+                                        <button type="button" onclick="changeTickets(1)"
+                                            class="w-12 h-12 flex items-center justify-center text-2xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-xl transition">+</button>
+                                    </div>
+                                    <p class="text-sm text-[#948979] dark:text-[#948979] mt-2">
+                                        متبقي: <span id="remaining-tickets" class="font-semibold text-[#7AAACE]">
+                                            {{ $event->num_tickets }}
+                                        </span> مقعد
+                                    </p>
                                 </div>
-                                <p class="text-sm text-[#948979] dark:text-[#948979] mt-2">
-                                    متبقي: <span id="remaining-tickets" class="font-semibold text-[#7AAACE]">
-                                        {{ $event->num_tickets }}
-                                    </span> مقعد
-                                </p>
-                            </div>
 
-                            <button type="button" onclick="submitAttending()"
-                                class="w-full py-4 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-2xl transition text-lg">
-                                حجز <span id="ticket-count">1</span> تذكرة
-                            </button>
-                        </form>
-                    </div>
-                @else
-                    <div
-                        class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-3xl p-8 text-center">
-                        <p class="text-red-600 dark:text-red-400 font-medium">نفذت التذاكر لهذه الفعالية</p>
-                    </div>
-                @endif
+                                <button type="button" onclick="submitAttending()"
+                                    class="w-full py-4 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-2xl transition text-lg">
+                                    حجز <span id="ticket-count">1</span> تذكرة
+                                </button>
+                            </form>
+                        </div>
+                    @elseif (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin() && $event->num_tickets <= 0)
+                        <div
+                            class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-3xl p-8 text-center">
+                            <p class="text-red-600 dark:text-red-400 font-medium">نفذت التذاكر لهذه الفعالية</p>
+                        </div>
+                    @endif
+                @endauth
 
                 <!-- Guest Form -->
                 @if ($event->is_public && !auth()->check())
