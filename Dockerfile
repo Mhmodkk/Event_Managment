@@ -3,7 +3,7 @@ FROM node:20 AS frontend
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --ignore-scripts
+RUN npm ci
 
 COPY . .
 RUN npm run build
