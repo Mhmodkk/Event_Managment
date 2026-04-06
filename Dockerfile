@@ -37,4 +37,4 @@ RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd
 
 RUN php artisan storage:link
 
-CMD php artisan migrate:fresh --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT}
+CMD php artisan storage:link && php artisan migrate:fresh --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT}
