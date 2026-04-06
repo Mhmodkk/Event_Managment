@@ -1,13 +1,3 @@
-FROM node:20 AS frontend
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci
-
-COPY . .
-RUN npm run build
-
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
@@ -23,6 +13,8 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     default-libmysqlclient-dev \
     libmagickwand-dev \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -37,7 +29,9 @@ WORKDIR /var/www/html
 
 COPY . .
 
-COPY --from=frontend /app/public/build ./public/build
+RUN npm ci
+
+RUN npm run build
 
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd
 
