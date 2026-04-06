@@ -32,7 +32,7 @@
             class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#F7F8F0] dark:bg-[#222831]">
             <div class="mb-8">
                 <a href="/">
-                    <img src="{{ asset('storage/logos/HPU.png') }}" alt="HPU Logo" class="w-24 h-auto object-contain">
+                    <img src="{{ asset('logos/HPU.png') }}" alt="HPU Logo" class="w-24 h-auto object-contain">
                 </a>
             </div>
 
