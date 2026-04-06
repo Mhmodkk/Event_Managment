@@ -34,7 +34,10 @@ RUN npm run build
 
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd
 
-RUN mkdir -p storage/app/public/logos
+RUN mkdir -p public/logos
+RUN cp resources/Image/HPU.png public/logos/HPU.png 2>/dev/null || true
+RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
+
 RUN php artisan storage:link
 
 CMD php artisan migrate:fresh --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT}
