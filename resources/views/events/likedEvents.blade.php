@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                {{ __('Liked Events') }}
+                الفعاليات المفضلة
             </h2>
         </div>
     </x-slot>
@@ -41,7 +41,7 @@
                                         <td class="px-6 py-4 text-right">
                                             <a href="{{ route('eventShow', $event) }}"
                                                 class="text-[#7AAACE] dark:text-[#7AAACE] hover:text-[#9CD5FF] dark:hover:text-[#9CD5FF] font-medium transition">
-                                                عرض
+                                                عرض التفاصيل
                                             </a>
                                         </td>
                                     </tr>
@@ -51,7 +51,7 @@
                                             class="px-6 py-12 text-center text-[#948979] dark:text-[#948979]">
                                             <div class="flex flex-col items-center">
                                                 <span class="text-5xl mb-4">❤️</span>
-                                                <p class="text-lg">لا يوجد فعاليات مفضلة حالياً</p>
+                                                <p class="text-lg">لا توجد فعاليات مفضلة حالياً</p>
                                             </div>
                                         </td>
                                     </tr>

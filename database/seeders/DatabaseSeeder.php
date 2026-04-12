@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Ahmad',
                 'faculty_id'        => 2,
+                'student_id'        => 'S12345678',
                 'password'          => Hash::make('12345678'),
                 'role'              => 'admin',
                 'email_verified_at' => now(),
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Ali',
                 'faculty_id'        => 1,
+                'student_id'        => 'A12345678',
                 'password'          => Hash::make('12345678'),
                 'role'              => 'super_admin',
                 'email_verified_at' => now(),
@@ -67,6 +69,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Mahmod',
                 'faculty_id'        => 2,
+                'student_id'        => 'D12345678',
                 'password'          => Hash::make('12345678'),
                 'role'              => 'student',
                 'email_verified_at' => now(),
@@ -79,6 +82,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Amr',
                 'faculty_id'        => 2,
+                'student_id'        => 'S87654321',
                 'password'          => Hash::make('12345678'),
                 'role'              => 'student',
                 'email_verified_at' => now(),
@@ -91,6 +95,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Amr',
                 'faculty_id'        => 2,
+                'student_id'        => 'S11223344',
                 'password'          => Hash::make('12345678'),
                 'role'              => 'admin',
                 'email_verified_at' => now(),
@@ -103,6 +108,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name'              => 'Amr',
                 'faculty_id'        => 2,
+                'student_id'        => 'G11223344',
                 'password'          => Hash::make('12345678'),
                 'role'              => 'super_admin',
                 'email_verified_at' => now(),

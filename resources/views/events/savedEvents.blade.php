@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                {{ __('الفعاليات المحفوظة') }}
+                الفعاليات المحفوظة
             </h2>
         </div>
     </x-slot>
@@ -40,7 +40,7 @@
                                 <td class="px-6 py-4 text-right">
                                     <a href="{{ route('eventShow', $event) }}"
                                         class="text-[#7AAACE] dark:text-[#7AAACE] hover:text-[#9CD5FF] dark:hover:text-[#9CD5FF] font-medium transition">
-                                        عرض
+                                        عرض التفاصيل
                                     </a>
                                 </td>
                             </tr>
@@ -49,7 +49,7 @@
                                 <td colspan="4" class="px-6 py-10 text-center text-[#948979] dark:text-[#948979]">
                                     <div class="flex flex-col items-center">
                                         <span class="text-3xl mb-2">📅</span>
-                                        <p>No saved events found.</p>
+                                        <p>لا توجد فعاليات محفوظة</p>
                                     </div>
                                 </td>
                             </tr>

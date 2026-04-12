@@ -14,10 +14,10 @@
 
                 <div class="text-center mb-8">
                     <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">
-                        ؟ QR جاهز لمسح رمز
+                        جاهز لمسح رمز QR؟
                     </h3>
                     <p class="mt-2 text-[#948979] dark:text-[#948979]">
-                        وجه الكاميرا نحو رمزك الخاص بالمشاركة
+                        وجه الكاميرا نحو رمز الحضور الخاص بك
                     </p>
                 </div>
 
@@ -85,8 +85,6 @@
 
         const onScanSuccess = async (decodedText) => {
             html5QrCode.stop().then(() => {
-                console.log("Scanner stopped");
-
                 resultDiv.innerHTML = '<p class="text-[#7AAACE] dark:text-[#7AAACE]">جاري التحقق...</p>';
                 resultDiv.classList.remove('hidden');
 
@@ -115,9 +113,7 @@
                     })
                     .catch(error => {
                         let msg = 'حدث خطأ أثناء التحقق';
-                        if (error.response?.data?.message) {
-                            msg = error.response.data.message;
-                        }
+                        if (error.response?.data?.message) msg = error.response.data.message;
                         showResult('error', msg);
                     })
                     .finally(() => {

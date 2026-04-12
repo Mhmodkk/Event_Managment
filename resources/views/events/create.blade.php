@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                {{ __('إنشاء فعالية جديدة') }}
+                إنشاء فعالية جديدة
             </h2>
         </div>
     </x-slot>
@@ -42,8 +42,7 @@
                                 تعريفية</option>
                             <option value="party" {{ old('type') == 'party' ? 'selected' : '' }}>حفلة تعارف</option>
                             <option value="trip" {{ old('type') == 'trip' ? 'selected' : '' }}>رحلة علمية</option>
-                            <option value="exhibition" {{ old('type') == 'exhibition' ? 'selected' : '' }}>معرض
-                            </option>
+                            <option value="exhibition" {{ old('type') == 'exhibition' ? 'selected' : '' }}>معرض</option>
                             <option value="sports" {{ old('type') == 'sports' ? 'selected' : '' }}>فعالية رياضية
                             </option>
                             <option value="hackathon" {{ old('type') == 'hackathon' ? 'selected' : '' }}>مسابقة

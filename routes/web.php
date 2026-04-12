@@ -23,6 +23,7 @@ use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Auth\OtpController;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ Route::get('/', WelcomeController::class)->name('welcome');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/gallery', GalleryIndexController::class)->name('galleryIndex');
+
+Route::get('verify-otp', [OtpController::class, 'show'])->name('otp.verify');
+Route::post('verify-otp', [OtpController::class, 'verify']);
 
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -84,9 +88,6 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['auth', 'admin'])->get('/scan/{event}', [EventScanController::class, '__invoke'])
         ->name('scan.event');
-
-    Route::middleware('auth')->post('/events/{event}/scan', ScanTicketController::class)
-        ->name('scan.ticket');
 
     Route::middleware('auth')->delete('/bookings/{attending}/cancel', [CancelBookingController::class, '__invoke'])->name('bookings.cancel');
     Route::middleware('auth')->post('/events/{event}/rate', [RatingController::class, 'store'])->name('events.rate');

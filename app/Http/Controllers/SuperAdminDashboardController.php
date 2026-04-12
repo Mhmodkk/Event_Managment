@@ -13,7 +13,14 @@ class SuperAdminDashboardController extends Controller
         $totalEvents = Event::count();
         $totalBookings = Attending::count();
         $attendedCount = Attending::whereNotNull('attended_at')->count();
-        $attendanceRate = $totalBookings > 0 ? round(($attendedCount / $totalBookings) * 100, 1) : 0;
+
+        $attendanceRate = $totalBookings > 0
+            ? round(($attendedCount / $totalBookings) * 100, 1)
+            : 0;
+
+        $allEvents = Event::withCount('attendings')
+            ->orderBy('start_date', 'desc')
+            ->get();
 
         $topFaculties = Event::withCount('attendings')
             ->orderBy('attendings_count', 'desc')
@@ -33,6 +40,7 @@ class SuperAdminDashboardController extends Controller
             'totalBookings',
             'attendedCount',
             'attendanceRate',
+            'allEvents',
             'topFaculties',
             'recentUsers',
             'users',

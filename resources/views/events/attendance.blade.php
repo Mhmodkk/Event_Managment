@@ -7,6 +7,7 @@
             <div class="text-sm text-[#948979] dark:text-[#948979]">
                 التذاكر المتبقية: <strong>{{ $remainingTickets }}</strong> / {{ $event->num_tickets }}
             </div>
+        </div>
     </x-slot>
 
     <div class="py-8">

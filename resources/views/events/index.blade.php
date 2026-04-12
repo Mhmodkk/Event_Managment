@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                {{ __('Events Management - HPU') }}
+                إدارة الفعاليات
             </h2>
 
             @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                 <a href="{{ route('events.create') }}"
                     class="px-6 py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white rounded-lg font-medium transition shadow-md hover:shadow-lg">
-                    + فعالية جديدة
+                    + إنشاء فعالية جديدة
                 </a>
             @endif
         </div>
@@ -53,7 +53,7 @@
                                         تعديل
                                     </a>
                                     <form method="POST" action="{{ route('events.destroy', $event) }}" class="inline"
-                                        onsubmit="return confirm('هل أنت متأكد من حذف الفعالية؟');">
+                                        onsubmit="return confirm('هل أنت متأكد من حذف هذه الفعالية؟');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
@@ -68,7 +68,7 @@
                                 <td colspan="5" class="px-6 py-12 text-center text-[#948979] dark:text-[#948979]">
                                     <div class="flex flex-col items-center">
                                         <span class="text-5xl mb-4">📅</span>
-                                        <p class="text-lg">لا يوجد فعاليات مسجلة في جامعة الحواش حالياً</p>
+                                        <p class="text-lg">لا توجد فعاليات مسجلة حالياً</p>
                                     </div>
                                 </td>
                             </tr>

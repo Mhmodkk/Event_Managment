@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                {{ __('أرشيف المعرض') }}
+                أرشيف المعرض
             </h2>
             <div>
                 @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                     <a href="{{ route('galleries.create') }}"
                         class="text-white bg-[#7AAACE] hover:bg-[#9CD5FF] focus:ring-4 focus:ring-[#7AAACE]/50 font-medium rounded-lg text-sm px-6 py-3 transition duration-200 ease-in-out transform hover:scale-105 border border-[#7AAACE]">
-                        + معرض جديد
+                        + إضافة صورة جديدة
                     </a>
                 @endif
             </div>
@@ -22,11 +22,11 @@
                 <table class="w-full text-sm text-left text-[#948979] dark:text-[#948979]">
                     <thead class="text-xs text-[#948979] uppercase bg-[#9CD5FF] dark:bg-[#222831] dark:text-[#948979]">
                         <tr>
-                            <th scope="col" class="px-6 py-3">صورة</th>
+                            <th scope="col" class="px-6 py-3">الصورة</th>
                             <th scope="col" class="px-6 py-3">الفعالية</th>
-                            <th scope="col" class="px-6 py-3">شرح</th>
+                            <th scope="col" class="px-6 py-3">الشرح</th>
                             <th scope="col" class="px-6 py-3">
-                                {{ auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() ? 'رابط' : 'معلومات' }}
+                                {{ auth()->user()->isAdmin() || auth()->user()->isSuperAdmin() ? 'الإجراءات' : 'معلومات' }}
                             </th>
                         </tr>
                     </thead>
@@ -40,7 +40,7 @@
                                 </td>
 
                                 <td class="px-6 py-4 font-semibold text-[#7AAACE] dark:text-[#7AAACE]">
-                                    {{ $gallery->event->title ?? 'Untitled Event' }}
+                                    {{ $gallery->event->title ?? 'فعالية غير محددة' }}
                                 </td>
 
                                 <td class="px-6 py-4 font-medium text-[#355872] dark:text-[#DFD0B8]">
@@ -51,15 +51,15 @@
                                     @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                                         <div class="flex space-x-4">
                                             <a href="{{ route('galleries.edit', $gallery) }}"
-                                                class="font-medium text-[#7AAACE] dark:text-[#7AAACE] hover:text-[#9CD5FF] dark:hover:text-[#9CD5FF] transition">Edit</a>
+                                                class="font-medium text-[#7AAACE] dark:text-[#7AAACE] hover:text-[#9CD5FF] dark:hover:text-[#9CD5FF] transition">تعديل</a>
 
                                             <form method="POST" action="{{ route('galleries.destroy', $gallery) }}"
-                                                onsubmit="return confirm('Are you sure you want to delete this image?')">
+                                                onsubmit="return confirm('هل أنت متأكد من حذف هذه الصورة؟')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
                                                     class="font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition">
-                                                    Delete
+                                                    حذف
                                                 </button>
                                             </form>
                                         </div>
@@ -83,7 +83,7 @@
                                                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
                                             </path>
                                         </svg>
-                                        <p>No images found for any events yet.</p>
+                                        <p>لا توجد صور في الأرشيف حتى الآن</p>
                                     </div>
                                 </td>
                             </tr>

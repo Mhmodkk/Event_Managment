@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                {{ __('تعديل الفعالية') }}
+                تعديل الفعالية
             </h2>
         </div>
     </x-slot>
@@ -214,7 +214,7 @@
                                     <input id="tag-{{ $tag->id }}" type="checkbox" name="tags[]"
                                         value="{{ $tag->id }}"
                                         class="w-5 h-5 text-[#7AAACE] bg-[#F7F8F0] border-[#9CD5FF] dark:bg-[#393E46] dark:border-[#948979] rounded focus:ring-[#7AAACE]"
-                                        {{ old('tags', $event->tags->pluck('id')->toArray()) && in_array($tag->id, old('tags', $event->tags->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                        {{ in_array($tag->id, old('tags', $event->tags->pluck('id')->toArray())) ? 'checked' : '' }}>
                                     <label for="tag-{{ $tag->id }}"
                                         class="ms-2 text-sm font-medium text-[#948979] dark:text-[#948979]">
                                         {{ $tag->name }}
