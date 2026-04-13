@@ -154,4 +154,24 @@ class EventController extends Controller
             abort(403, 'لست صاحب هذه الفعالية');
         }
     }
+
+    public function faculties()
+    {
+        $faculties = Faculty::all();
+        return view('faculties', compact('faculties'));
+    }
+
+    public function types()
+    {
+        return view('event-types');
+    }
+
+    public function archive()
+    {
+        $events = Event::where('start_date', '<', now())
+            ->with(['faculty', 'tags'])
+            ->latest()
+            ->paginate(12);
+        return view('archive', compact('events'));
+    }
 }

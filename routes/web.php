@@ -91,6 +91,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('auth')->delete('/bookings/{attending}/cancel', [CancelBookingController::class, '__invoke'])->name('bookings.cancel');
     Route::middleware('auth')->post('/events/{event}/rate', [RatingController::class, 'store'])->name('events.rate');
+
+    Route::get('/faculties', [EventController::class, 'faculties'])->name('faculties.index');
+    Route::get('/event-types', [EventController::class, 'types'])->name('events.types');
+    Route::get('/archive', [EventController::class, 'archive'])->name('events.archive');
 });
 
 require __DIR__ . '/auth.php';

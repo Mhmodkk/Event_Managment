@@ -10,6 +10,7 @@
             <p class="text-[#948979] dark:text-[#948979] mt-2">انضم إلى منصة فعاليات جامعة الحواش الخاصة</p>
         </div>
 
+        <!-- الاسم -->
         <div>
             <x-input-label for="name" :value="__('الاسم الكامل')" class="text-right" />
             <x-text-input id="name" class="block mt-1 w-full text-right" type="text" name="name"
@@ -17,6 +18,7 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2 text-right" />
         </div>
 
+        <!-- الرقم الجامعي -->
         <div class="mt-4">
             <x-input-label for="student_id" :value="__('الرقم الجامعي')" class="text-right" />
             <x-text-input id="student_id" class="block mt-1 w-full text-right" type="text" name="student_id"
@@ -24,6 +26,15 @@
             <x-input-error :messages="$errors->get('student_id')" class="mt-2 text-right" />
         </div>
 
+        <!-- رقم الموبايل (الجديد) -->
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('رقم الموبايل')" class="text-right" />
+            <x-text-input id="phone" class="block mt-1 w-full text-right" type="tel" name="phone"
+                :value="old('phone')" required placeholder="05xxxxxxxx" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2 text-right" />
+        </div>
+
+        <!-- البريد الجامعي -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('البريد الإلكتروني الجامعي')" class="text-right" />
             <x-text-input id="email" class="block mt-1 w-full text-right" type="email" name="email"
@@ -31,6 +42,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-right" />
         </div>
 
+        <!-- الكلية -->
         <div class="mt-4">
             <x-input-label for="faculty_id" :value="__('الكلية')" class="text-right" />
             <select id="faculty_id" name="faculty_id"
@@ -45,6 +57,7 @@
             <x-input-error :messages="$errors->get('faculty_id')" class="mt-2 text-right" />
         </div>
 
+        <!-- كلمة المرور -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('كلمة المرور')" class="text-right" />
             <x-text-input id="password" class="block mt-1 w-full text-right" type="password" name="password" required
@@ -61,11 +74,11 @@
 
         <div class="flex flex-col items-center justify-end mt-8 gap-4">
             <x-primary-button class="w-full justify-center py-3 bg-[#7AAACE] hover:bg-[#355872] transition">
-                {{ __('إنشاء الحساب') }}
+                إنشاء الحساب
             </x-primary-button>
 
             <a href="{{ route('login') }}" class="text-sm text-[#355872] dark:text-[#DFD0B8] hover:underline">
-                {{ __('لديك حساب بالفعل؟ تسجيل الدخول') }}
+                لديك حساب بالفعل؟ تسجيل الدخول
             </a>
         </div>
     </form>
