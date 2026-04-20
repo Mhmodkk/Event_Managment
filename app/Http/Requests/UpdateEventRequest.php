@@ -20,7 +20,6 @@ class UpdateEventRequest extends FormRequest
             'description' => 'required|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'start_time' => 'required',
             'faculty_id' => 'required|exists:faculties,id',
             'num_tickets' => 'required|integer|min:1',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',

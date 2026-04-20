@@ -23,7 +23,6 @@ class Event extends Model
         'qr_code',
         'start_date',
         'end_date',
-        'start_time',
         'image',
         'num_tickets',
         'user_id',

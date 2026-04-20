@@ -174,4 +174,22 @@ class EventController extends Controller
             ->paginate(12);
         return view('archive', compact('events'));
     }
+
+    public function welcome()
+    {
+        $upcomingEvents = Event::with(['faculty'])
+            ->where('start_date', '>=', now())
+            ->orderBy('start_date')
+            ->take(8)
+            ->get();
+
+        $recentEvents = Event::with(['faculty'])
+            ->where('end_date', '<', now())
+            ->where('end_date', '>=', now()->subDays(30))
+            ->orderBy('end_date', 'desc')
+            ->take(8)
+            ->get();
+
+        return view('welcome', compact('upcomingEvents', 'recentEvents'));
+    }
 }

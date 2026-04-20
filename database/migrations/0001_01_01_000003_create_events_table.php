@@ -17,10 +17,9 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->json('excluded_days')->nullable();
             $table->boolean('is_public')->default(false);
-            $table->string('qr_code')->nullable();           
+            $table->string('qr_code')->nullable();
             $table->date('start_date');
             $table->date('end_date');
-            $table->time('start_time');
             $table->string('image');
             $table->integer('num_tickets');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();

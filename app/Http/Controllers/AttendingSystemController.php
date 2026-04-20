@@ -20,7 +20,6 @@ class AttendingSystemController extends Controller
 
         $requestedTickets = (int) $request->input('num_tickets', 1);
 
-        // التحقق من عدد التذاكر المطلوب
         if ($requestedTickets < 1 || $requestedTickets > 10) {
             return response()->json([
                 'status'  => 'error',
@@ -28,7 +27,6 @@ class AttendingSystemController extends Controller
             ], 422);
         }
 
-        // حساب المقاعد المتبقية
         $bookedCount = $event->attendings()->sum('num_tickets');
         $remaining = $event->num_tickets - $bookedCount;
 
@@ -69,7 +67,6 @@ class AttendingSystemController extends Controller
             ], 403);
         }
 
-        // توليد QR Code
         if ($newAttending) {
             $qrToken = 'attending:' . $newAttending->id;
 

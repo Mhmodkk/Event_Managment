@@ -30,13 +30,13 @@
         <div class="mt-4">
             <x-input-label for="phone" :value="__('رقم الموبايل')" class="text-right" />
             <x-text-input id="phone" class="block mt-1 w-full text-right" type="tel" name="phone"
-                :value="old('phone')" required placeholder="05xxxxxxxx" />
+                :value="old('phone')" required placeholder="09xxxxxxxx" />
             <x-input-error :messages="$errors->get('phone')" class="mt-2 text-right" />
         </div>
 
         <!-- البريد الجامعي -->
         <div class="mt-4">
-            <x-input-label for="email" :value="__('البريد الإلكتروني الجامعي')" class="text-right" />
+            <x-input-label for="email" :value="__('البريد الإلكتروني')" class="text-right" />
             <x-text-input id="email" class="block mt-1 w-full text-right" type="email" name="email"
                 :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-right" />

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
 use App\Models\Faculty;
 use App\Models\Tag;
 use App\Models\User;
@@ -15,12 +16,14 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Faculties
         $faculties = [
-            ['name' => 'Faculty of Pharmacy',   'slug' => 'pharmacy'],
-            ['name' => 'Faculty of Engineering', 'slug' => 'engineering'],
-            ['name' => 'Faculty of Medicine',    'slug' => 'medicine'],
-            ['name' => 'Faculty of Dentistry',   'slug' => 'dentistry'],
-            ['name' => 'Faculty of Law',         'slug' => 'law'],
-            ['name' => 'Faculty of Arts',        'slug' => 'arts'],
+            ['name' => 'كلية الصيدلة',   'slug' => 'pharmacy'],
+            ['name' => 'كلية الهندسة', 'slug' => 'engineering'],
+            ['name' => 'كلية الطب',    'slug' => 'medicine'],
+            ['name' => 'كلية طب الأسنان',   'slug' => 'dentistry'],
+            ['name' => 'كلية الحقوق',         'slug' => 'law'],
+            ['name' => 'كلية إدارة الأعمال',         'slug' => 'business'],
+            ['name' => 'كلية التجميل',        'slug' => 'cosmetology'],
+            ['name' => 'كلية التمريض',        'slug' => 'nursing'],
         ];
 
         foreach ($faculties as $faculty) {
@@ -29,10 +32,25 @@ class DatabaseSeeder extends Seeder
 
         // 2. Tags
         $tags = [
-            ['name' => 'Laravel',           'slug' => 'laravel'],
-            ['name' => 'Vue JS',            'slug' => 'vue-js'],
+            ['name' => 'Scientific Conference', 'slug' => 'scientific-conference'],
             ['name' => 'Scientific Seminar', 'slug' => 'seminar'],
             ['name' => 'Sports Event',      'slug' => 'sports'],
+            ['name' => 'Cultural Event',    'slug' => 'cultural'],
+            ['name' => 'Charity Event',     'slug' => 'charity'],
+            ['name' => 'Workshop',          'slug' => 'workshop'],
+            ['name' => 'Lecture',           'slug' => 'lecture'],
+            ['name' => 'Symposium',         'slug' => 'symposium'],
+            ['name' => 'Contest',           'slug' => 'contest'],
+            ['name' => 'Exhibition',        'slug' => 'exhibition'],
+            ['name' => 'Conference',        'slug' => 'conference'],
+            ['name' => 'Other Events',      'slug' => 'other-events'],
+            ['name' => 'Technology',        'slug' => 'technology'],
+            ['name' => 'Innovation',         'slug' => 'innovation'],
+            ['name' => 'Health',             'slug' => 'health'],
+            ['name' => 'Education',          'slug' => 'education'],
+            ['name' => 'Environment',        'slug' => 'environment'],
+            ['name' => 'Community Service',   'slug' => 'community-service'],
+            ['name' => 'Career Development',   'slug' => 'career-development'],
         ];
 
         foreach ($tags as $tag) {
@@ -115,5 +133,144 @@ class DatabaseSeeder extends Seeder
                 'remember_token'    => Str::random(10),
             ]
         );
+
+
+
+        $events = [
+            [
+                'title'        => 'ورشة عمل',
+                'slug'         => 'workshop',
+                'type'         => 'workshop',
+                'description'  => 'ورشة عمل تفاعلية لتطوير المهارات العملية للطلاب.',
+                'location'     => 'قاعة 101 - كلية الهندسة',
+                'start_date'   => '2026-05-10',
+                'end_date'     => '2026-06-10',
+                'image'        => 'events/workshop.webp',
+                'num_tickets'  => 80,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 2
+            ],
+            [
+                'title'        => 'محاضرة',
+                'slug'         => 'lecture',
+                'type'         => 'lecture',
+                'description'  => 'محاضرة علمية حول أحدث التطورات في مجال التقنية.',
+                'location'     => 'القاعة الكبرى',
+                'start_date'   => '2026-05-15',
+                'end_date'     => '2026-06-15',
+                'image'        => 'events/lecture.jpg',
+                'num_tickets'  => 150,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 2
+            ],
+            [
+                'title'        => 'ندوة',
+                'slug'         => 'symposium',
+                'type'         => 'seminar',
+                'description'  => 'ندوة علمية ونقاش مفتوح مع الخبراء.',
+                'location'     => 'قاعة الندوات',
+                'start_date'   => '2026-05-20',
+                'end_date'     => '2026-06-20',
+                'image'        => 'events/symposium.png',
+                'num_tickets'  => 100,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 1
+            ],
+            [
+                'title'        => 'مسابقة',
+                'slug'         => 'contest',
+                'type'         => 'competition',
+                'description'  => 'مسابقة بين الطلاب في مجال البرمجة والابتكار.',
+                'location'     => 'مختبر الحاسوب',
+                'start_date'   => '2026-06-01',
+                'end_date'     => '2026-07-01',
+                'image'        => 'events/competition.webp',
+                'num_tickets'  => 60,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 1
+            ],
+            [
+                'title'        => 'معرض',
+                'slug'         => 'exhibition',
+                'type'         => 'exhibition',
+                'description'  => 'معرض لعرض مشاريع وأعمال الطلاب.',
+                'location'     => 'بهو الكلية',
+                'start_date'   => '2026-06-10',
+                'end_date'     => '2026-07-12',
+                'image'        => 'events/exhibition.webp',
+                'num_tickets'  => 20,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 3
+            ],
+            [
+                'title'        => 'مؤتمرات',
+                'slug'         => 'conferences',
+                'type'         => 'conference',
+                'description'  => 'مؤتمر علمي يجمع المتخصصين والأكاديميين.',
+                'location'     => 'المركز الثقافي',
+                'start_date'   => '2026-06-20',
+                'end_date'     => '2026-07-22',
+                'image'        => 'events/conferences.webp',
+                'num_tickets'  => 300,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 3
+            ],
+            [
+                'title'        => 'نشاط ثقافي',
+                'slug'         => 'cultural-event',
+                'type'         => 'cultural',
+                'description'  => 'نشاط ثقافي وترفيهي للطلاب.',
+                'location'     => 'ساحة الجامعة',
+                'start_date'   => '2026-07-01',
+                'end_date'     => '2026-08-01',
+                'image'        => 'events/cultural-event.webp',
+                'num_tickets'  => 200,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 4
+            ],
+            [
+                'title'        => 'نشاط رياضي',
+                'slug'         => 'sports-event',
+                'type'         => 'sports',
+                'description'  => 'نشاط رياضي وترفيهي.',
+                'location'     => 'الملعب الرياضي',
+                'start_date'   => '2026-07-10',
+                'end_date'     => '2026-08-10',
+                'image'        => 'events/sports.webp',
+                'num_tickets'  => 150,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 4
+            ],
+            [
+                'title'        => 'نشاط خيري',
+                'slug'         => 'charity-event',
+                'type'         => 'charity',
+                'description'  => 'نشاط خيري واجتماعي.',
+                'location'     => 'بهو الجامعة',
+                'start_date'   => '2026-07-15',
+                'end_date'     => '2026-08-15',
+                'image'        => 'events/charity.webp',
+                'num_tickets'  => 50,
+                'is_public'    => true,
+                'user_id'      => 1,
+                'faculty_id'   => 5
+            ],
+
+        ];
+
+        foreach ($events as $event) {
+            Event::firstOrCreate(
+                ['slug' => $event['slug']],
+                $event
+            );
+        }
     }
 }

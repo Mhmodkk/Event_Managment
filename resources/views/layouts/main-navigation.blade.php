@@ -2,91 +2,150 @@
     dir="rtl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
+
+            <!-- شعار + عنوان -->
             <div class="flex">
-                <!-- شعار الجامعة + عنوان المنصة -->
                 <div class="shrink-0 flex items-center gap-4">
-                    <a href="/">
+                    <a href="{{ route('welcome') }}">
                         <img src="{{ asset('logos/HPU.png') }}" alt="شعار جامعة الحواش"
                             class="h-12 w-auto object-contain">
                     </a>
                     <div class="hidden sm:block">
-                        <h1 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">منصة لإدارة الفعاليات
-                            والأنشطة الجامعية</h1>
+                        <h1 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">
+                            منصة لإدارة الفعاليات والأنشطة الجامعية
+                        </h1>
                     </div>
                 </div>
 
-                <!-- القوائم المطلوبة من المشرف -->
-                <div class="hidden space-x-reverse space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
-                    <x-nav-link :href="route('faculties.index')">الكليات</x-nav-link>
-                    <x-nav-link :href="route('events.types')">الفعاليات</x-nav-link>
-                    <x-nav-link :href="route('events.archive')">الأرشيف</x-nav-link>
+                <div class="hidden sm:flex items-center gap-12 ms-10"> <!-- gap-8 → gap-12 -->
+
+                    <!-- 1. الكليات -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open"
+                            class="flex items-center gap-1 text-[#355872] dark:text-[#DFD0B8] font-medium hover:text-[#7AAACE] transition-colors">
+                            الكليات
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <div x-show="open" @click.outside="open = false"
+                            class="absolute mt-2 w-80 bg-white dark:bg-[#222831] shadow-2xl rounded-2xl py-3 z-50 border border-[#9CD5FF] dark:border-[#948979]">
+                            @forelse($faculties as $faculty)
+                                <a href="{{ route('eventIndex', ['faculty_id' => $faculty->id]) }}"
+                                    @click="open = false"
+                                    class="block px-6 py-3 hover:bg-[#F7F8F0] dark:hover:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8]">
+                                    {{ $faculty->name }}
+                                </a>
+                            @empty
+                                <div class="px-6 py-3 text-[#948979]">لا توجد كليات بعد</div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <!-- 2. الفعاليات -->
+                    <div class="relative" x-data="{ eventsOpen: false }">
+                        <button @click="eventsOpen = !eventsOpen"
+                            class="flex items-center gap-1 text-[#355872] dark:text-[#DFD0B8] font-medium hover:text-[#7AAACE] transition-colors">
+                            الفعاليات
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <div x-show="eventsOpen" @click.outside="eventsOpen = false"
+                            class="absolute mt-2 w-80 bg-white dark:bg-[#222831] shadow-2xl rounded-2xl py-3 z-50 border border-[#9CD5FF] dark:border-[#948979]">
+                            @php
+                                $eventTypes = [
+                                    'workshop' => 'ورشة عمل',
+                                    'lecture' => 'محاضرة',
+                                    'seminar' => 'ندوة',
+                                    'competition' => 'مسابقة',
+                                    'exhibition' => 'معرض',
+                                    'conference' => 'مؤتمر',
+                                    'cultural' => 'نشاط ثقافي',
+                                    'sports' => 'نشاط رياضي',
+                                    'charity' => 'نشاط خيري',
+                                    'other' => 'فعاليات أخرى',
+                                ];
+                            @endphp
+
+                            @foreach ($eventTypes as $type => $name)
+                                <a href="{{ route('eventIndex', ['type' => $type]) }}" @click="eventsOpen = false"
+                                    class="block px-6 py-3 hover:bg-[#F7F8F0] dark:hover:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8]">
+                                    {{ $name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- 3. الأرشيف -->
+                    <a href="{{ route('events.archive') }}"
+                        class="text-[#355872] dark:text-[#DFD0B8] font-medium hover:text-[#7AAACE] transition-colors {{ request()->routeIs('events.archive') ? 'text-[#7AAACE]' : '' }}">
+                        الأرشيف
+                    </a>
+                    <!-- 4. التسجيل -->
+                    @guest
+                        <a href="{{ route('register') }}"
+                            class="text-[#355872] dark:text-[#DFD0B8] font-medium hover:text-[#7AAACE] transition-colors">
+                            التسجيل
+                        </a>
+                    @endguest
+
                 </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
+            <!-- الجانب الأيمن -->
+            <div class="flex items-center gap-4">
                 @auth
-                    <x-nav-link :href="route('dashboard')">لوحة التحكم</x-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="text-red-600 hover:text-red-700 font-medium transition px-3">
+                        <button onclick="event.preventDefault(); this.closest('form').submit();"
+                            class="text-sm text-red-600 hover:text-red-700 transition">
                             تسجيل الخروج
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-[#355872] dark:text-[#DFD0B8] hover:underline">تسجيل
-                        الدخول</a>
-                    <a href="{{ route('register') }}"
-                        class="bg-[#7AAACE] text-white px-4 py-2 rounded-lg hover:bg-[#355872] transition">التسجيل</a>
+                    <a href="{{ route('login') }}" class="text-[#355872] dark:text-[#DFD0B8] hover:text-[#7AAACE]">
+                        تسجيل الدخول
+                    </a>
                 @endauth
 
-                <!-- تبديل الثيم -->
-                <button @click="darkMode = !darkMode" class="p-2 text-[#355872] dark:text-[#DFD0B8]">
-                    <span x-show="!darkMode">🌙</span>
-                    <span x-show="darkMode">☀️</span>
+                <button @click="darkMode = !darkMode"
+                    class="p-2 rounded-full bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] transition duration-200">
+                    <span x-show="!darkMode" class="text-xl">🌙</span>
+                    <span x-show="darkMode" class="text-xl">☀️</span>
                 </button>
-            </div>
 
-            <!-- زر القائمة في الموبايل -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] transition">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                <button @click="open = !open" class="sm:hidden p-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- القائمة المتجاوبة (موبايل) -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('faculties.index')">الكليات</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('events.types')">الفعاليات</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('events.archive')">الأرشيف</x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('register')">التسجيل</x-responsive-nav-link>
+    <!-- قائمة الموبايل -->
+    <div :class="{ 'block': open, 'hidden': !open }" class="sm:hidden bg-[#F7F8F0] dark:bg-[#222831] border-t">
+        <div class="px-4 py-4 space-y-4">
+            @forelse($faculties as $faculty)
+                <a href="{{ route('eventIndex', ['faculty_id' => $faculty->id]) }}" class="block font-medium">•
+                    {{ $faculty->name }}</a>
+            @empty
+                <span class="block text-[#948979]">لا توجد كليات</span>
+            @endforelse
+            <a href="{{ route('events.types') }}" class="block font-medium">الفعاليات</a>
+            <a href="{{ route('events.archive') }}" class="block font-medium">الأرشيف</a>
+            @guest
+                <a href="{{ route('register') }}" class="block font-medium">التسجيل</a>
+            @endguest
         </div>
-
-        @auth
-            <div class="pt-4 pb-1 border-t border-[#9CD5FF] dark:border-[#948979]">
-                <div class="px-4">
-                    <div class="font-medium text-base text-[#355872] dark:text-[#DFD0B8]">{{ Auth::user()->name }}</div>
-                </div>
-                <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('dashboard')">لوحة التحكم</x-responsive-nav-link>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            تسجيل الخروج
-                        </x-responsive-nav-link>
-                    </form>
-                </div>
-            </div>
-        @endauth
     </div>
 </nav>

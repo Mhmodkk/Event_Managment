@@ -14,29 +14,35 @@ class CreateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:155|min:2',
-            'description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'start_time' => 'required',
-            'faculty_id' => 'required|exists:faculties,id',
-            'num_tickets' => 'required|integer|min:1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tags' => 'required|array',
-            'tags.*' => 'exists:tags,id',
-            'type' => 'required|string|in:workshop,course,lecture,orientation,party,trip,exhibition,sports,hackathon,job_fair',
-            'location' => 'required|string|max:255',
-            'excluded_days' => 'nullable|array',
-            'excluded_days.*' => 'date|after_or_equal:start_date',
-            'is_public' => 'boolean',
+            'title'          => 'required|string|max:255|min:5',
+            'description'    => 'required|string|min:20',
+            'start_date'     => 'required|date|after_or_equal:today',
+            'end_date'       => 'required|date|after_or_equal:start_date',
+            'faculty_id'     => 'required|exists:faculties,id',
+            'type'           => 'required|in:workshop,course,lecture,orientation,party,trip,exhibition,sports,hackathon,job_fair,other',
+            'location'       => 'required|string|max:255',
+            'num_tickets'    => 'nullable|integer|min:1',
+            'image'          => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'tags'           => 'nullable|array',
+            'tags.*'         => 'exists:tags,id',
+            'is_public'      => 'boolean',
+            'excluded_days_json' => 'nullable|string',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'type.in' => 'نوع الفعالية غير صحيح، اختر من القائمة المتاحة.',
-            'excluded_days.*.date' => 'يجب أن تكون أيام العطل تواريخ صحيحة.',
+            'title.required'         => 'عنوان الفعالية مطلوب',
+            'title.min'              => 'يجب أن يكون العنوان 5 أحرف على الأقل',
+            'description.min'        => 'يجب أن يكون الوصف 20 حرفاً على الأقل',
+            'start_date.after_or_equal' => 'تاريخ البداية يجب أن يكون اليوم أو في المستقبل',
+            'end_date.after_or_equal'   => 'تاريخ النهاية يجب أن يكون بعد تاريخ البداية أو يساويه',
+            'faculty_id.required'    => 'يجب اختيار الكلية',
+            'faculty_id.exists'      => 'الكلية المختارة غير موجودة',
+            'type.required'          => 'يجب اختيار نوع الفعالية',
+            'image.image'            => 'يجب أن يكون الملف صورة',
+            'image.max'              => 'حجم الصورة يجب ألا يتجاوز 5 ميجابايت',
         ];
     }
 }

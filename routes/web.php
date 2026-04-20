@@ -22,12 +22,11 @@ use App\Http\Controllers\ScanTicketController;
 use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\SuperAdminDashboardController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', WelcomeController::class)->name('welcome');
+Route::get('/', [EventController::class, 'welcome'])->name('welcome');
 Route::get('/e', EventIndexController::class)->name('eventIndex');
 Route::get('/e/{id}', EventShowController::class)->name('eventShow');
 Route::get('/gallery', GalleryIndexController::class)->name('galleryIndex');
