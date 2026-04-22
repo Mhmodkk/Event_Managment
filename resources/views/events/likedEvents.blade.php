@@ -1,10 +1,6 @@
-<x-app-layout>
+<x-main-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-                الفعاليات المفضلة
-            </h2>
-        </div>
+        <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8]">الفعاليات المفضلة</h2>
     </x-slot>
 
     <div class="py-12">
@@ -17,15 +13,15 @@
                             <thead
                                 class="bg-[#9CD5FF] dark:bg-[#222831] text-[#948979] dark:text-[#948979] uppercase text-xs">
                                 <tr>
-                                    <th class="px-6 py-4">اسم الفعالية</th>
-                                    <th class="px-6 py-4">تاريخ البدء</th>
-                                    <th class="px-6 py-4">الكلية</th>
-                                    <th class="px-6 py-4 text-right">إجراء</th>
+                                    <th scope="col" class="px-6 py-4">اسم الفعالية</th>
+                                    <th scope="col" class="px-6 py-4">تاريخ البدء</th>
+                                    <th scope="col" class="px-6 py-4">الكلية</th>
+                                    <th scope="col" class="px-6 py-4 text-right">إجراء</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y dark:divide-[#948979]">
                                 @forelse($events as $event)
-                                    <tr class="hover:bg-[#9CD5FF] dark:hover:bg-[#948979] transition">
+                                    <tr class="hover:bg-[#9CD5FF]/30 dark:hover:bg-[#948979]/50 transition">
                                         <td class="px-6 py-4 font-medium text-[#7AAACE] dark:text-[#7AAACE]">
                                             {{ $event->title }}
                                         </td>
@@ -34,14 +30,14 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <span
-                                                class="bg-[#9CD5FF] dark:bg-[#948979] text-[#355872] dark:text-[#DFD0B8] text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                                class="bg-[#9CD5FF] dark:bg-[#948979] text-[#355872] dark:text-[#DFD0B8] text-xs font-medium px-3 py-1 rounded-full">
                                                 {{ $event->faculty->name }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 text-right">
-                                            <a href="{{ route('eventShow', $event) }}"
-                                                class="text-[#7AAACE] dark:text-[#7AAACE] hover:text-[#9CD5FF] dark:hover:text-[#9CD5FF] font-medium transition">
-                                                عرض التفاصيل
+                                            <a href="{{ route('eventShow', $event->id) }}"
+                                                class="text-[#7AAACE] dark:text-[#7AAACE] hover:text-[#9CD5FF] dark:hover:text-[#9CD5FF] font-medium transition inline-flex items-center gap-1">
+                                                عرض التفاصيل <span class="text-lg">←</span>
                                             </a>
                                         </td>
                                     </tr>
@@ -69,4 +65,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-main-layout>

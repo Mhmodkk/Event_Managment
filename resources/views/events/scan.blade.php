@@ -1,28 +1,22 @@
-<x-app-layout>
+<x-main-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
-            سجل حضورك في - {{ $event->title }}
-        </h2>
+        <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8]">سجل حضورك في - {{ $event->title }}</h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-[#F7F8F0] dark:bg-[#393E46] overflow-hidden shadow-sm sm:rounded-lg p-6">
-
-                <div id="result" class="mb-8 p-6 rounded-xl text-center text-lg font-medium hidden">
-                </div>
+            <div
+                class="bg-[#F7F8F0] dark:bg-[#393E46] overflow-hidden shadow-xl sm:rounded-2xl p-6 border border-[#9CD5FF] dark:border-[#948979]">
+                <div id="result" class="mb-8 p-6 rounded-xl text-center text-lg font-medium hidden"></div>
 
                 <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">
-                        جاهز لمسح رمز QR؟
-                    </h3>
-                    <p class="mt-2 text-[#948979] dark:text-[#948979]">
-                        وجه الكاميرا نحو رمز الحضور الخاص بك
-                    </p>
+                    <h3 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">جاهز لمسح رمز QR؟</h3>
+                    <p class="mt-2 text-[#948979] dark:text-[#948979]">وجه الكاميرا نحو رمز الحضور الخاص بك</p>
                 </div>
 
                 <div id="reader"
-                    class="w-full max-w-md mx-auto aspect-square bg-black rounded-xl overflow-hidden shadow-2xl"></div>
+                    class="w-full max-w-md mx-auto aspect-square bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-[#9CD5FF]">
+                </div>
             </div>
         </div>
     </div>
@@ -52,15 +46,9 @@
 
             let html = `<p class="${textClass}">${message}</p>`;
 
-            if (details.name) {
-                html += `<p class="mt-3 text-xl font-bold ${textClass}">${details.name}</p>`;
-            }
-            if (details.type) {
-                html += `<p class="mt-1 text-base ${textClass}">${details.type}</p>`;
-            }
-            if (details.time) {
-                html += `<p class="mt-2 text-sm ${textClass}">وقت التسجيل: ${details.time}</p>`;
-            }
+            if (details.name) html += `<p class="mt-3 text-xl font-bold ${textClass}">${details.name}</p>`;
+            if (details.type) html += `<p class="mt-1 text-base ${textClass}">${details.type}</p>`;
+            if (details.time) html += `<p class="mt-2 text-sm ${textClass}">وقت التسجيل: ${details.time}</p>`;
 
             resultDiv.innerHTML = html;
 
@@ -158,19 +146,19 @@
             ).catch(err => {
                 readerDiv.innerHTML = `
                     <div class="p-8 text-center text-red-600 dark:text-red-400 text-lg">
-                        فشل بدء الكاميرا<br>
+                        فشل بدء الكاميرا <br>
                         <small class="block mt-3">
                             ${err.name === 'NotAllowedError' ? 'يرجى السماح بالوصول إلى الكاميرا' : ''}
                             ${err.name === 'NotFoundError' ? 'لا يوجد كاميرا متاحة' : err.message || 'حدث خطأ غير متوقع'}
                         </small>
-                        <button onclick="location.reload()" class="mt-6 px-6 py-3 bg-[#7AAACE] text-white rounded-lg hover:bg-[#9CD5FF]">
+                        <button onclick="location.reload()" class="mt-6 px-6 py-3 bg-[#7AAACE] text-white rounded-lg hover:bg-[#9CD5FF] transition">
                             إعادة المحاولة
                         </button>
                     </div>
                 `;
             });
         } catch (err) {
-            console.error("فشل تهيئة الماسح:", err);
+            console.error("فشل تهيئة الماسح: ", err);
         }
     </script>
-</x-app-layout>
+</x-main-layout>
