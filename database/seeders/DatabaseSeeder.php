@@ -136,141 +136,141 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $events = [
-            [
-                'title'        => 'ورشة عمل',
-                'slug'         => 'workshop',
-                'type'         => 'workshop',
-                'description'  => 'ورشة عمل تفاعلية لتطوير المهارات العملية للطلاب.',
-                'location'     => 'قاعة 101 - كلية الهندسة',
-                'start_date'   => '2026-05-10',
-                'end_date'     => '2026-06-10',
-                'image'        => 'events/workshop.webp',
-                'num_tickets'  => 80,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 2
-            ],
-            [
-                'title'        => 'محاضرة',
-                'slug'         => 'lecture',
-                'type'         => 'lecture',
-                'description'  => 'محاضرة علمية حول أحدث التطورات في مجال التقنية.',
-                'location'     => 'القاعة الكبرى',
-                'start_date'   => '2026-05-15',
-                'end_date'     => '2026-06-15',
-                'image'        => 'events/lecture.jpg',
-                'num_tickets'  => 150,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 2
-            ],
-            [
-                'title'        => 'ندوة',
-                'slug'         => 'symposium',
-                'type'         => 'seminar',
-                'description'  => 'ندوة علمية ونقاش مفتوح مع الخبراء.',
-                'location'     => 'قاعة الندوات',
-                'start_date'   => '2026-05-20',
-                'end_date'     => '2026-06-20',
-                'image'        => 'events/symposium.png',
-                'num_tickets'  => 100,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 1
-            ],
-            [
-                'title'        => 'مسابقة',
-                'slug'         => 'contest',
-                'type'         => 'competition',
-                'description'  => 'مسابقة بين الطلاب في مجال البرمجة والابتكار.',
-                'location'     => 'مختبر الحاسوب',
-                'start_date'   => '2026-06-01',
-                'end_date'     => '2026-07-01',
-                'image'        => 'events/competition.webp',
-                'num_tickets'  => 60,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 1
-            ],
-            [
-                'title'        => 'معرض',
-                'slug'         => 'exhibition',
-                'type'         => 'exhibition',
-                'description'  => 'معرض لعرض مشاريع وأعمال الطلاب.',
-                'location'     => 'بهو الكلية',
-                'start_date'   => '2026-06-10',
-                'end_date'     => '2026-07-12',
-                'image'        => 'events/exhibition.webp',
-                'num_tickets'  => 20,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 3
-            ],
-            [
-                'title'        => 'مؤتمرات',
-                'slug'         => 'conferences',
-                'type'         => 'conference',
-                'description'  => 'مؤتمر علمي يجمع المتخصصين والأكاديميين.',
-                'location'     => 'المركز الثقافي',
-                'start_date'   => '2026-06-20',
-                'end_date'     => '2026-07-22',
-                'image'        => 'events/conferences.webp',
-                'num_tickets'  => 300,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 3
-            ],
-            [
-                'title'        => 'نشاط ثقافي',
-                'slug'         => 'cultural-event',
-                'type'         => 'cultural',
-                'description'  => 'نشاط ثقافي وترفيهي للطلاب.',
-                'location'     => 'ساحة الجامعة',
-                'start_date'   => '2026-07-01',
-                'end_date'     => '2026-08-01',
-                'image'        => 'events/cultural-event.webp',
-                'num_tickets'  => 200,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 4
-            ],
-            [
-                'title'        => 'نشاط رياضي',
-                'slug'         => 'sports-event',
-                'type'         => 'sports',
-                'description'  => 'نشاط رياضي وترفيهي.',
-                'location'     => 'الملعب الرياضي',
-                'start_date'   => '2026-07-10',
-                'end_date'     => '2026-08-10',
-                'image'        => 'events/sports.webp',
-                'num_tickets'  => 150,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 4
-            ],
-            [
-                'title'        => 'نشاط خيري',
-                'slug'         => 'charity-event',
-                'type'         => 'charity',
-                'description'  => 'نشاط خيري واجتماعي.',
-                'location'     => 'بهو الجامعة',
-                'start_date'   => '2026-07-15',
-                'end_date'     => '2026-08-15',
-                'image'        => 'events/charity.webp',
-                'num_tickets'  => 50,
-                'is_public'    => true,
-                'user_id'      => 1,
-                'faculty_id'   => 5
-            ],
+        // $events = [
+        //     [
+        //         'title'        => 'ورشة عمل',
+        //         'slug'         => 'workshop',
+        //         'type'         => 'workshop',
+        //         'description'  => 'ورشة عمل تفاعلية لتطوير المهارات العملية للطلاب.',
+        //         'location'     => 'قاعة 101 - كلية الهندسة',
+        //         'start_date'   => '2026-05-10',
+        //         'end_date'     => '2026-06-10',
+        //         'image'        => 'events/workshop.webp',
+        //         'num_tickets'  => 80,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 2
+        //     ],
+        //     [
+        //         'title'        => 'محاضرة',
+        //         'slug'         => 'lecture',
+        //         'type'         => 'lecture',
+        //         'description'  => 'محاضرة علمية حول أحدث التطورات في مجال التقنية.',
+        //         'location'     => 'القاعة الكبرى',
+        //         'start_date'   => '2026-05-15',
+        //         'end_date'     => '2026-06-15',
+        //         'image'        => 'events/lecture.jpg',
+        //         'num_tickets'  => 150,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 2
+        //     ],
+        //     [
+        //         'title'        => 'ندوة',
+        //         'slug'         => 'symposium',
+        //         'type'         => 'seminar',
+        //         'description'  => 'ندوة علمية ونقاش مفتوح مع الخبراء.',
+        //         'location'     => 'قاعة الندوات',
+        //         'start_date'   => '2026-05-20',
+        //         'end_date'     => '2026-06-20',
+        //         'image'        => 'events/symposium.png',
+        //         'num_tickets'  => 100,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 1
+        //     ],
+        //     [
+        //         'title'        => 'مسابقة',
+        //         'slug'         => 'contest',
+        //         'type'         => 'competition',
+        //         'description'  => 'مسابقة بين الطلاب في مجال البرمجة والابتكار.',
+        //         'location'     => 'مختبر الحاسوب',
+        //         'start_date'   => '2026-06-01',
+        //         'end_date'     => '2026-07-01',
+        //         'image'        => 'events/competition.webp',
+        //         'num_tickets'  => 60,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 1
+        //     ],
+        //     [
+        //         'title'        => 'معرض',
+        //         'slug'         => 'exhibition',
+        //         'type'         => 'exhibition',
+        //         'description'  => 'معرض لعرض مشاريع وأعمال الطلاب.',
+        //         'location'     => 'بهو الكلية',
+        //         'start_date'   => '2026-06-10',
+        //         'end_date'     => '2026-07-12',
+        //         'image'        => 'events/exhibition.webp',
+        //         'num_tickets'  => 20,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 3
+        //     ],
+        //     [
+        //         'title'        => 'مؤتمرات',
+        //         'slug'         => 'conferences',
+        //         'type'         => 'conference',
+        //         'description'  => 'مؤتمر علمي يجمع المتخصصين والأكاديميين.',
+        //         'location'     => 'المركز الثقافي',
+        //         'start_date'   => '2026-06-20',
+        //         'end_date'     => '2026-07-22',
+        //         'image'        => 'events/conferences.webp',
+        //         'num_tickets'  => 300,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 3
+        //     ],
+        //     [
+        //         'title'        => 'نشاط ثقافي',
+        //         'slug'         => 'cultural-event',
+        //         'type'         => 'cultural',
+        //         'description'  => 'نشاط ثقافي وترفيهي للطلاب.',
+        //         'location'     => 'ساحة الجامعة',
+        //         'start_date'   => '2026-07-01',
+        //         'end_date'     => '2026-08-01',
+        //         'image'        => 'events/cultural-event.webp',
+        //         'num_tickets'  => 200,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 4
+        //     ],
+        //     [
+        //         'title'        => 'نشاط رياضي',
+        //         'slug'         => 'sports-event',
+        //         'type'         => 'sports',
+        //         'description'  => 'نشاط رياضي وترفيهي.',
+        //         'location'     => 'الملعب الرياضي',
+        //         'start_date'   => '2026-07-10',
+        //         'end_date'     => '2026-08-10',
+        //         'image'        => 'events/sports.webp',
+        //         'num_tickets'  => 150,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 4
+        //     ],
+        //     [
+        //         'title'        => 'نشاط خيري',
+        //         'slug'         => 'charity-event',
+        //         'type'         => 'charity',
+        //         'description'  => 'نشاط خيري واجتماعي.',
+        //         'location'     => 'بهو الجامعة',
+        //         'start_date'   => '2026-07-15',
+        //         'end_date'     => '2026-08-15',
+        //         'image'        => 'events/charity.webp',
+        //         'num_tickets'  => 50,
+        //         'is_public'    => true,
+        //         'user_id'      => 1,
+        //         'faculty_id'   => 5
+        //     ],
 
-        ];
+        // ];
 
-        foreach ($events as $event) {
-            Event::firstOrCreate(
-                ['slug' => $event['slug']],
-                $event
-            );
-        }
+        // foreach ($events as $event) {
+        //     Event::firstOrCreate(
+        //         ['slug' => $event['slug']],
+        //         $event
+        //     );
+        // }
     }
 }
