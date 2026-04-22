@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                <div class="hidden sm:flex items-center gap-12 ms-10"> <!-- gap-8 → gap-12 -->
+                <div class="hidden sm:flex items-center gap-12 ms-10">
 
                     <!-- 1. الكليات -->
                     <div class="relative" x-data="{ open: false }">

@@ -6,8 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div
                 class="bg-[#F7F8F0] dark:bg-[#393E46] rounded-3xl shadow-xl border border-[#9CD5FF] dark:border-[#948979] overflow-hidden">
 
@@ -40,7 +39,6 @@
 
                     <!-- Stats Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-
                         <!-- للطلاب -->
                         @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
                             <div
@@ -62,7 +60,6 @@
                                 </p>
                             </div>
                         @endif
-
                     </div>
 
                     <!-- تتبع المشاركة (للإداريين فقط) -->
@@ -76,9 +73,9 @@
                                 <table class="w-full text-sm">
                                     <thead class="bg-[#F7F8F0] dark:bg-[#222831] text-[#948979] uppercase text-xs">
                                         <tr>
-                                            <th class="px-6 py-5 text-right">اسم الفعالية</th>
-                                            <th class="px-6 py-5 text-right">حالة السعة</th>
-                                            <th class="px-6 py-5 text-right">التاريخ</th>
+                                            <th scope="col" class="px-6 py-5 text-right">اسم الفعالية</th>
+                                            <th scope="col" class="px-6 py-5 text-right">حالة السعة</th>
+                                            <th scope="col" class="px-6 py-5 text-right">التاريخ</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y dark:divide-[#948979]">
