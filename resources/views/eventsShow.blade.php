@@ -296,25 +296,48 @@
                     </p>
                 </div>
 
-                <!-- QR Code -->
+                <!-- ✅ قسم رمز الحضور العام المحسّن (للطباعة والتعليق في القاعة) -->
                 @auth
-                    @if ($attending && $qrCodeUrl)
+                    @if (auth()->id() === $event->user_id || auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                         <div
-                            class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-2xl shadow-lg border border-[#9CD5FF] dark:border-[#948979] text-center">
-                            <h3 class="text-xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-4">رمز الحضور الخاص بك</h3>
-                            <div
-                                class="inline-block p-4 bg-white dark:bg-[#222831] rounded-xl shadow-inner border-2 border-[#7AAACE]">
-                                <img src="{{ $qrCodeUrl }}" alt="رمز QR لحضورك"
-                                    class="w-48 h-48 md:w-56 md:h-56 object-contain mx-auto">
+                            class="bg-gradient-to-br from-[#7AAACE]/10 to-[#9CD5FF]/10 dark:from-[#7AAACE]/20 dark:to-[#948979]/20 p-6 rounded-2xl shadow-lg border-2 border-[#7AAACE] dark:border-[#948979] text-center">
+                            <div class="flex items-center justify-center gap-2 mb-3">
+                                <svg class="w-5 h-5 text-[#7AAACE]" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                </svg>
+                                <h3 class="text-lg font-bold text-[#355872] dark:text-[#DFD0B8]">رمز الحضور العام</h3>
                             </div>
-                            <p class="mt-4 text-[#948979] dark:text-[#948979] text-sm">امسح هذا الكود عند الوصول لتسجيل
-                                حضورك</p>
-                        </div>
-                    @elseif (!$attending)
-                        <div
-                            class="bg-[#9CD5FF] dark:bg-[#948979] p-6 rounded-2xl text-center border border-[#7AAACE] dark:border-[#DFD0B8]">
-                            <p class="text-base font-medium text-[#355872] dark:text-[#222831]">احجز مكانك أولاً ليظهر رمز
-                                QR الخاص بك</p>
+                            <p class="text-xs text-[#948979] mb-4">اطبع هذا الرمز وعلّقه في مدخل القاعة لتسجيل حضور الطلاب
+                            </p>
+
+                            <div
+                                class="bg-white dark:bg-[#222831] p-4 rounded-xl inline-block shadow-lg border-2 border-[#7AAACE] mb-4">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('events.attendance.public', ['token' => $event->attendance_token])) }}"
+                                    alt="Public Attendance QR" class="w-52 h-52 object-contain mx-auto">
+                            </div>
+
+                            <div class="space-y-3">
+                                <button onclick="printQRCode()"
+                                    class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                                    </svg>
+                                    طباعة الرمز
+                                </button>
+
+                                <a href="{{ route('events.attendance.public', ['token' => $event->attendance_token]) }}"
+                                    target="_blank" class="block text-sm text-[#7AAACE] hover:underline font-medium">
+                                    معاينة صفحة الحضور ←
+                                </a>
+
+                                <div
+                                    class="text-[10px] text-[#948979] break-all px-2 font-mono bg-[#F7F8F0] dark:bg-[#222831] py-2 rounded-lg">
+                                    {{ route('events.attendance.public', ['token' => $event->attendance_token]) }}
+                                </div>
+                            </div>
                         </div>
                     @endif
                 @endauth
@@ -405,11 +428,18 @@
             <button onclick="document.getElementById('qrSuccessModal').classList.add('hidden')"
                 class="absolute top-3 right-3 text-[#948979] hover:text-[#355872] text-3xl font-bold leading-none">×</button>
             <h3 class="text-2xl font-bold text-[#7AAACE] dark:text-[#7AAACE] mb-4">شكراً لحجزك!</h3>
-            <p class="text-[#948979] dark:text-[#948979] mb-4 text-sm">امسح هذا الرمز عند الوصول لتسجيل حضورك</p>
-            <img id="qrSuccessImage" src="" alt="رمز الحضور QR"
-                class="mx-auto w-48 h-48 object-contain border-2 border-[#7AAACE] rounded-lg shadow-md">
-            <p class="mt-4 text-xs text-[#948979] dark:text-[#948979]"><strong id="qrSuccessToken"
-                    class="font-mono break-all"></strong></p>
+            <p class="text-[#948979] dark:text-[#948979] mb-4 text-sm">تم حجز مقعدك بنجاح</p>
+            <div
+                class="bg-white dark:bg-[#222831] p-4 rounded-xl inline-block shadow-inner border-2 border-[#7AAACE] mb-4">
+                <p class="text-sm text-[#355872] dark:text-[#DFD0B8] font-mono break-all">
+                    {{ $event->title }}<br>
+                    {{ $event->start_date->format('d/m/Y H:i') }}
+                </p>
+            </div>
+            <button onclick="document.getElementById('qrSuccessModal').classList.add('hidden')"
+                class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition">
+                فهمت، شكراً
+            </button>
         </div>
     </div>
 </x-main-layout>
@@ -442,8 +472,6 @@
             const data = await response.json();
 
             if (data.status === 'added') {
-                document.getElementById('qrSuccessImage').src = data.qr_code_url;
-                document.getElementById('qrSuccessToken').textContent = data.qr_token;
                 document.getElementById('qrSuccessModal').classList.remove('hidden');
             } else {
                 alert(data.message || 'حدث خطأ أثناء الحجز');
@@ -451,6 +479,44 @@
         } catch (error) {
             alert('فشل في الاتصال بالخادم');
         }
+    }
+
+    // ✅ دالة طباعة رمز الـ QR العام
+    function printQRCode() {
+        const printContent = `
+            <!DOCTYPE html>
+            <html dir="rtl" lang="ar">
+            <head>
+                <meta charset="UTF-8">
+                <title>رمز حضور - {{ $event->title }}</title>
+                <style>
+                    body { font-family: Tahoma, Arial, sans-serif; text-align: center; padding: 40px; background: #fff; color: #355872; }
+                    .qr-box { border: 3px solid #7AAACE; padding: 20px; display: inline-block; border-radius: 16px; }
+                    .qr-img { width: 200px; height: 200px; object-contain; }
+                    .event-title { font-size: 24px; font-weight: bold; margin: 20px 0 10px; }
+                    .event-info { font-size: 14px; color: #948979; margin-bottom: 20px; }
+                    .footer { font-size: 12px; color: #948979; margin-top: 30px; }
+                    @media print { body { padding: 20px; } }
+                </style>
+            </head>
+            <body>
+                <div class="qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('events.attendance.public', ['token' => $event->attendance_token])) }}" class="qr-img" alt="QR">
+                    <div class="event-title">{{ $event->title }}</div>
+                    <div class="event-info">
+                        {{ $event->faculty->name }}<br>
+                        {{ $event->start_date->format('d/m/Y H:i') }}<br>
+                        {{ $event->location }}
+                    </div>
+                    <div class="footer">امسح الرمز لتسجيل حضورك • منصة فعاليات جامعة الحواش</div>
+                </div>
+                <script>window.onload = () => { setTimeout(() => window.print(), 500); }<\/script>
+            </body>
+            </html>
+        `;
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(printContent);
+        printWindow.document.close();
     }
 </script>
 
@@ -471,9 +537,7 @@
                     if (type === 'save') this.saved = !this.saved;
                     if (type === 'attending') {
                         this.attending = !this.attending;
-                        if (res.data.status === 'added' && res.data.qr_code_url) {
-                            document.getElementById('qrSuccessImage').src = res.data.qr_code_url;
-                            document.getElementById('qrSuccessToken').textContent = res.data.qr_token;
+                        if (res.data.status === 'added') {
                             document.getElementById('qrSuccessModal').classList.remove('hidden');
                         }
                     }

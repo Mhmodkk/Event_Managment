@@ -26,12 +26,11 @@
                 @endif
             </h1>
 
-            @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-                <a href="{{ route('events.create') }}"
-                    class="flex items-center gap-2 px-6 py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
-                    <span class="text-xl">+</span> إضافة فعالية جديدة
-                </a>
-            @endif
+
+            <a href="{{ route('events.create') }}"
+                class="flex items-center gap-2 px-6 py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
+                <span class="text-xl">+</span> إضافة فعالية جديدة
+            </a>
         </div>
 
         <!-- Events Grid -->

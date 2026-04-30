@@ -3,14 +3,22 @@
         <!-- Quick Admin Links -->
         <div class="flex flex-wrap gap-3 mb-10">
             <a href="{{ route('events.index') }}"
-                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">إدارة
-                الفعاليات</a>
-            <a href="{{ route('users.index') }}"
-                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">إدارة
-                المستخدمين</a>
+                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">
+                إدارة الفعاليات
+            </a>
+            <a href="{{ route('admin.users.index') }}"
+                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">
+                إدارة المستخدمين
+            </a>
             <a href="{{ route('galleries.index') }}"
-                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">إدارة
-                المعرض</a>
+                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">
+                إدارة المعرض
+            </a>
+            <!-- ✅ زر إدارة رموز الدعوة المضاف -->
+            <a href="{{ route('admin.invitation-codes.index') }}"
+                class="px-6 py-3 bg-[#F7F8F0] dark:bg-[#393E46] text-[#355872] dark:text-[#DFD0B8] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] rounded-xl font-medium transition border border-[#9CD5FF]">
+                إدارة رموز الدعوة
+            </a>
         </div>
 
         <!-- Stats -->

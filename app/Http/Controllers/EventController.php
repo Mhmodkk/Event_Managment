@@ -16,15 +16,18 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class EventController extends Controller
 {
-    public function index(Request $request): View
+    public function index()
     {
-        $query = Event::with(['faculty', 'tags']);
+        $user = auth()->user();
 
-        if ($request->has('my_faculty')) {
-            $query->where('faculty_id', auth()->user()->faculty_id);
+        if ($user->isSuperAdmin()) {
+            $events = Event::with('faculty')->latest()->paginate(15);
+        } else {
+            $events = Event::where('user_id', $user->id)
+                ->with('faculty')
+                ->latest()
+                ->paginate(15);
         }
-
-        $events = $query->latest()->paginate(10);
 
         return view('events.index', compact('events'));
     }
@@ -92,9 +95,13 @@ class EventController extends Controller
         return view('events.show', compact('event', 'like', 'savedEvent', 'attending'));
     }
 
-    public function edit(Event $event): View
+    public function edit(Event $event)
     {
-        $this->authorizeOwner($event);
+        $user = auth()->user();
+
+        if (!$user->isSuperAdmin() && $user->id !== $event->user_id) {
+            abort(403, 'غير مصرح لك بتعديل هذه الفعالية');
+        }
 
         $faculties = Faculty::all();
         $tags = Tag::all();
@@ -104,7 +111,12 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
-        $this->authorizeOwner($event);
+
+        $user = auth()->user();
+
+        if (!$user->isSuperAdmin() && $user->id !== $event->user_id) {
+            abort(403, 'غير مصرح لك بتعديل هذه الفعالية');
+        }
 
         $data = $request->validated();
 
@@ -132,7 +144,11 @@ class EventController extends Controller
 
     public function destroy(Event $event): RedirectResponse
     {
-        $this->authorizeOwner($event);
+        $user = auth()->user();
+
+        if (!$user->isSuperAdmin() && $user->id !== $event->user_id) {
+            abort(403, 'غير مصرح لك بتعديل هذه الفعالية');
+        }
 
         if ($event->image) {
             Storage::disk('public')->delete($event->image);
@@ -148,12 +164,7 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'تم حذف الفعالية');
     }
 
-    protected function authorizeOwner(Event $event)
-    {
-        if (auth()->id() !== $event->user_id) {
-            abort(403, 'لست صاحب هذه الفعالية');
-        }
-    }
+
 
     public function faculties()
     {

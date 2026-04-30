@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-2xl text-[#355872] dark:text-[#DFD0B8] leading-tight">
                 إدارة المستخدمين
             </h2>
-            <a href="{{ route('super.dashboard') }}"
+            <a href="{{ route('managment') }}"
                 class="px-5 py-2.5 bg-[#F7F8F0] dark:bg-[#393E46] hover:bg-[#9CD5FF] dark:hover:bg-[#948979] text-[#355872] dark:text-[#DFD0B8] rounded-xl text-sm font-medium transition flex items-center gap-2">
                 ← العودة للوحة التحكم
             </a>
@@ -76,7 +76,7 @@
                                         {{ $user->created_at->format('d/m/Y') }}
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap">
-                                        <form action="{{ route('users.update-role', $user->id) }}" method="POST"
+                                        <form action="{{ route('admin.users.update-role', $user->id) }}" method="POST"
                                             class="flex items-center gap-2">
                                             @csrf
                                             @method('PATCH')

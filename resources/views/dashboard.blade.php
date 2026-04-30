@@ -29,7 +29,7 @@
                             class="px-6 py-3 bg-[#9CD5FF] dark:bg-[#948979] text-[#355872] dark:text-[#222831] rounded-2xl font-medium text-sm flex items-center gap-2">
                             <span>الحالة:</span>
                             <span class="font-bold">
-                                {{ auth()->user()->isSuperAdmin() ? 'مدير المنصة' : (auth()->user()->isAdmin() ? 'مشرف كلية' : 'طالب') }}
+                                {{ auth()->user()->isSuperAdmin() ? 'مدير المنصة' : (auth()->user()->isAdmin() ? 'مشرف' : 'طالب') }}
                             </span>
                         </div>
                     </div>

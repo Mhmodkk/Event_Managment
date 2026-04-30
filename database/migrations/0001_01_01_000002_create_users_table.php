@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('faculty_id')->constrained()->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
-            $table->string('student_id')->unique();
+            $table->string('student_id')->nullable()->unique();
             $table->string('otp')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
         });

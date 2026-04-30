@@ -18,10 +18,13 @@ return new class extends Migration
             $table->json('excluded_days')->nullable();
             $table->boolean('is_public')->default(false);
             $table->string('qr_code')->nullable();
+            $table->integer('num_tickets');
+
+            $table->string('attendance_token', 64)->unique()->nullable();
+
             $table->date('start_date');
             $table->date('end_date');
             $table->string('image');
-            $table->integer('num_tickets');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('faculty_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
