@@ -32,13 +32,13 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'start_date' => 'date:m/d/Y',
-        'end_date' => 'date:m/d/Y',
+        'start_date'    => 'datetime',
+        'end_date'      => 'datetime',
         'excluded_days' => 'array',
-        'is_public' => 'boolean',
+        'is_public'     => 'boolean',
     ];
 
-    // ✅ توليد الرمز تلقائياً عند إنشاء فعالية جديدة
+    //  توليد الرمز تلقائياً عند إنشاء فعالية جديدة
     protected static function booted()
     {
         static::creating(function ($event) {
@@ -51,11 +51,16 @@ class Event extends Model
     // ✅ التحقق من صلاحية وقت الحضور
     public function canRegisterAttendance(): bool
     {
-        $now = now();
-        $start = $this->start_date ? \Carbon\Carbon::parse($this->start_date)->subMinutes(30) : null;
-        $end = $this->end_date ? \Carbon\Carbon::parse($this->end_date)->addHour() : ($this->start_date ? \Carbon\Carbon::parse($this->start_date)->addHour(2) : null);
+        if (!$this->start_date || !$this->end_date) {
+            return false;
+        }
 
-        return $start && $end ? $now->between($start, $end) : false;
+        $now = now();
+        // فتح التسجيل قبل 30 دقيقة من البداية، وإغلاقه بعد ساعة من النهاية
+        $startWindow = $this->start_date->copy()->subMinutes(30);
+        $endWindow   = $this->end_date->copy()->addHour();
+
+        return $now->between($startWindow, $endWindow);
     }
 
     // ✅ رابط الحضور العام

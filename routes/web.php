@@ -3,24 +3,20 @@
 use App\Http\Controllers\{
     AttendingEventController,
     AttendingSystemController,
-    CancelBookingController,
     DeleteCommentController,
     EventAttendanceController,
     EventController,
     EventIndexController,
-    EventScanController,
     EventShowController,
     GalleryController,
     GalleryIndexController,
     InvitationCodeController,
     LikedEventController,
     LikeSystemController,
-    MyBookingsController,
     ProfileController,
     RatingController,
     SavedEventController,
     SavedEventSystemController,
-    ScanTicketController,
     StoreCommentController,
     SuperAdminDashboardController,
     UserController,
@@ -104,12 +100,6 @@ Route::middleware('auth')->group(function () {
     });
 
     // ==================== إدارة الفعاليات ====================
-
-    // المسارات المخصصة (تُعرف قبل الـ Resource لتجنب التعارض)
-    Route::get('/events/{event}/scan', [EventScanController::class, '__invoke'])
-        ->name('events.scan')->whereNumber('event');
-    Route::post('/events/{event}/scan-ticket', ScanTicketController::class)
-        ->name('scan.ticket');
     Route::get('/events/{event}/attendance', EventAttendanceController::class)
         ->name('events.attendance');
 
@@ -134,18 +124,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/events/{id}/comments', StoreCommentController::class)->name('events.comments');
     Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
 
-    // ==================== الحجوزات ====================
-    Route::get('/my-bookings', [MyBookingsController::class, 'index'])->name('my.bookings');
-    Route::delete('/bookings/{attending}/cancel', CancelBookingController::class)->name('bookings.cancel');
-
     // ==================== التقييم ====================
     Route::post('/events/{event}/rate', [RatingController::class, 'store'])->name('events.rate');
-
-    // ==================== المسح (للمشرفين فقط) ====================
-    Route::middleware('admin')->prefix('scan')->name('scan.')->group(function () {
-        Route::get('/', [EventScanController::class, 'index'])->name('index');
-        Route::get('/{event}', [EventScanController::class, '__invoke'])->name('event')->whereNumber('event');
-    });
 
     // ==================== لوحة المدير الأعلى (مسار بديل) ====================
     Route::middleware('superadmin')->get('/managment', SuperAdminDashboardController::class)->name('managment');

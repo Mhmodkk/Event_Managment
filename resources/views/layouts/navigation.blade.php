@@ -59,15 +59,7 @@
                             </a>
                         @endif
 
-                        @if (auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
-                            <a href="{{ route('scan.index') }}"
-                                class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200
-                                      {{ request()->routeIs('scan')
-                                          ? 'border-[#7AAACE] text-[#7AAACE] dark:text-[#7AAACE]'
-                                          : 'border-transparent text-[#355872] dark:text-[#DFD0B8] hover:text-[#7AAACE] dark:hover:text-[#7AAACE] hover:border-[#9CD5FF] dark:hover:border-[#948979]' }}">
-                                مسح رمز QR
-                            </a>
-                        @endif
+
                     @endauth
 
                     @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
@@ -91,13 +83,6 @@
                                       ? 'border-[#7AAACE] text-[#7AAACE] dark:text-[#7AAACE]'
                                       : 'border-transparent text-[#355872] dark:text-[#DFD0B8] hover:text-[#7AAACE] dark:hover:text-[#7AAACE] hover:border-[#9CD5FF] dark:hover:border-[#948979]' }}">
                             المشاركات
-                        </a>
-                        <a href="{{ route('my.bookings') }}"
-                            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200
-                                  {{ request()->routeIs('my.bookings')
-                                      ? 'border-[#7AAACE] text-[#7AAACE] dark:text-[#7AAACE]'
-                                      : 'border-transparent text-[#355872] dark:text-[#DFD0B8] hover:text-[#7AAACE] dark:hover:text-[#7AAACE] hover:border-[#9CD5FF] dark:hover:border-[#948979]' }}">
-                            حجوزاتي
                         </a>
                     @endif
                 </div>
@@ -221,13 +206,7 @@
                               : 'border-transparent text-[#355872] dark:text-[#DFD0B8] hover:text-[#7AAACE] hover:bg-[#9CD5FF]/20 dark:hover:bg-[#948979]/20 hover:border-[#9CD5FF] dark:hover:border-[#948979]' }}">
                     المشاركات
                 </a>
-                <a href="{{ route('my.bookings') }}"
-                    class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors
-                          {{ request()->routeIs('my.bookings')
-                              ? 'border-[#7AAACE] text-[#7AAACE] bg-[#9CD5FF]/20 dark:bg-[#948979]/20'
-                              : 'border-transparent text-[#355872] dark:text-[#DFD0B8] hover:text-[#7AAACE] hover:bg-[#9CD5FF]/20 dark:hover:bg-[#948979]/20 hover:border-[#9CD5FF] dark:hover:border-[#948979]' }}">
-                    حجوزاتي
-                </a>
+
             @endif
         </div>
 

@@ -25,11 +25,6 @@ return new class extends Migration
             $table->string('guest_email')->nullable();
 
             $table->timestamp('attended_at')->nullable()->comment('متى تم تأكيد الحضور فعلياً');
-            $table->foreignId('qr_scanned_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete()
-                ->comment('من قام بمسح QR لهذا الحضور');
 
             $table->string('qr_token')->nullable()->unique();
             $table->string('qr_path')->nullable();

@@ -1,5 +1,6 @@
 <x-main-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div class="space-y-1">
@@ -12,7 +13,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span>{{ $event->start_date->format('d/m/Y') }} | {{ $event->start_time }}</span>
+                    {{-- ✅ تصحيح: استخدام start_date مع الوقت --}}
+                    <span>{{ $event->start_date->format('d/m/Y H:i') }}</span>
                 </div>
             </div>
 
@@ -69,8 +71,10 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8">
+
             <!-- Main Content -->
             <div class="lg:col-span-2 space-y-8">
+
                 <!-- Image -->
                 <div class="relative rounded-2xl overflow-hidden shadow-xl group">
                     <img src="{{ asset('/storage/' . $event->image) }}"
@@ -97,12 +101,14 @@
                         <div class="space-y-1">
                             <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-base">نوع الفعالية</h3>
                             <p class="text-[#948979] dark:text-[#948979] text-sm">
-                                {{ ucfirst($event->type ?? 'غير محدد') }}</p>
+                                {{ ucfirst($event->type ?? 'غير محدد') }}
+                            </p>
                         </div>
 
                         <div class="space-y-1">
                             <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-base">المكان</h3>
-                            <p class="text-[#948979] dark:text-[#948979] text-sm">{{ $event->location ?? 'غير محدد' }}
+                            <p class="text-[#948979] dark:text-[#948979] text-sm">
+                                {{ $event->location ?? 'غير محدد' }}
                             </p>
                         </div>
 
@@ -113,6 +119,7 @@
                             </p>
                         </div>
 
+                        {{-- ✅ تصحيح: && بدلاً من & & --}}
                         @if ($event->excluded_days && count(json_decode($event->excluded_days, true)) > 0)
                             <div class="md:col-span-2 space-y-2">
                                 <h3 class="font-semibold text-[#355872] dark:text-[#DFD0B8] text-base">أيام العطل
@@ -177,9 +184,11 @@
                                             </div>
                                             <div>
                                                 <h4 class="font-bold text-[#355872] dark:text-[#DFD0B8] text-sm">
-                                                    {{ $comment->user->name }}</h4>
+                                                    {{ $comment->user->name }}
+                                                </h4>
                                                 <p class="mt-1 text-[#948979] dark:text-[#948979] leading-relaxed text-sm">
-                                                    {{ $comment->content }}</p>
+                                                    {{ $comment->content }}
+                                                </p>
                                             </div>
                                         </div>
 
@@ -205,6 +214,7 @@
 
             <!-- Sidebar -->
             <div class="space-y-6 lg:space-y-8">
+
                 <!-- تقييمات الفعالية -->
                 <div
                     class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-2xl shadow-lg border border-[#9CD5FF] dark:border-[#948979]">
@@ -219,7 +229,8 @@
                     @if ($event->ratingCount() > 0)
                         <div class="flex items-center gap-3 mb-4">
                             <div class="text-4xl font-bold text-amber-500">
-                                {{ number_format($event->averageRating(), 1) }}</div>
+                                {{ number_format($event->averageRating(), 1) }}
+                            </div>
                             <div>
                                 <div class="flex text-2xl text-amber-400">
                                     @for ($i = 1; $i <= 5; $i++)
@@ -237,26 +248,30 @@
                                 <div class="flex justify-between items-start">
                                     <div>
                                         <p class="font-medium text-[#355872] dark:text-[#DFD0B8] text-sm">
-                                            {{ $rating->user->name }}</p>
+                                            {{ $rating->user->name }}
+                                        </p>
                                         <div class="flex text-amber-400 text-base mt-1">
                                             @for ($i = 1; $i <= $rating->stars; $i++)
                                                 ★
                                             @endfor
                                         </div>
                                     </div>
-                                    <span
-                                        class="text-xs text-[#948979] dark:text-[#948979]">{{ $rating->created_at->diffForHumans() }}</span>
+                                    <span class="text-xs text-[#948979] dark:text-[#948979]">
+                                        {{ $rating->created_at->diffForHumans() }}
+                                    </span>
                                 </div>
                                 @if ($rating->comment)
                                     <p class="mt-2 text-[#948979] dark:text-[#948979] text-xs leading-relaxed">
-                                        "{{ $rating->comment }}"</p>
+                                        "{{ $rating->comment }}"
+                                    </p>
                                 @endif
                             </div>
                         @endforeach
 
                         @if ($event->ratingCount() > 2)
                             <p class="text-center text-xs text-[#7AAACE] dark:text-[#7AAACE] mt-4">
-                                +{{ $event->ratingCount() - 2 }} تقييم آخر</p>
+                                +{{ $event->ratingCount() - 2 }} تقييم آخر
+                            </p>
                         @endif
                     @else
                         <div class="text-center py-8 text-[#948979] dark:text-[#948979]">
@@ -280,7 +295,8 @@
                         </svg>
                         <div class="space-y-1">
                             <p class="font-bold text-lg text-[#355872] dark:text-[#DFD0B8]">
-                                {{ $event->location ?? 'غير محدد' }}</p>
+                                {{ $event->location ?? 'غير محدد' }}
+                            </p>
                             <p class="text-[#948979] dark:text-[#948979] text-sm">{{ $event->faculty->name }}</p>
                         </div>
                     </div>
@@ -296,54 +312,47 @@
                     </p>
                 </div>
 
-                <!-- ✅ قسم رمز الحضور العام المحسّن (للطباعة والتعليق في القاعة) -->
+                <!-- ✅ قسم رمز الحضور العام (للمشرفين والمديرين) -->
                 @auth
                     @if (auth()->id() === $event->user_id || auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
-                        <div
-                            class="bg-gradient-to-br from-[#7AAACE]/10 to-[#9CD5FF]/10 dark:from-[#7AAACE]/20 dark:to-[#948979]/20 p-6 rounded-2xl shadow-lg border-2 border-[#7AAACE] dark:border-[#948979] text-center">
-                            <div class="flex items-center justify-center gap-2 mb-3">
-                                <svg class="w-5 h-5 text-[#7AAACE]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                                </svg>
-                                <h3 class="text-lg font-bold text-[#355872] dark:text-[#DFD0B8]">رمز الحضور العام</h3>
-                            </div>
-                            <p class="text-xs text-[#948979] mb-4">اطبع هذا الرمز وعلّقه في مدخل القاعة لتسجيل حضور الطلاب
-                            </p>
-
+                        @if ($event->attendance_token)
                             <div
-                                class="bg-white dark:bg-[#222831] p-4 rounded-xl inline-block shadow-lg border-2 border-[#7AAACE] mb-4">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('events.attendance.public', ['token' => $event->attendance_token])) }}"
-                                    alt="Public Attendance QR" class="w-52 h-52 object-contain mx-auto">
-                            </div>
-
-                            <div class="space-y-3">
-                                <button onclick="printQRCode()"
-                                    class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="bg-gradient-to-br from-[#7AAACE]/10 to-[#9CD5FF]/10 dark:from-[#7AAACE]/20 dark:to-[#948979]/20 p-6 rounded-2xl shadow-lg border-2 border-[#7AAACE] dark:border-[#948979] text-center">
+                                <div class="flex items-center justify-center gap-2 mb-3">
+                                    <svg class="w-5 h-5 text-[#7AAACE]" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                                            d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                                     </svg>
-                                    طباعة الرمز
-                                </button>
-
-                                <a href="{{ route('events.attendance.public', ['token' => $event->attendance_token]) }}"
-                                    target="_blank" class="block text-sm text-[#7AAACE] hover:underline font-medium">
-                                    معاينة صفحة الحضور ←
-                                </a>
+                                    <h3 class="text-lg font-bold text-[#355872] dark:text-[#DFD0B8]">رمز الحضور العام</h3>
+                                </div>
+                                <p class="text-xs text-[#948979] mb-4">اطبع هذا الرمز وعلّقه في مدخل القاعة لتسجيل حضور
+                                    الطلاب</p>
 
                                 <div
-                                    class="text-[10px] text-[#948979] break-all px-2 font-mono bg-[#F7F8F0] dark:bg-[#222831] py-2 rounded-lg">
-                                    {{ route('events.attendance.public', ['token' => $event->attendance_token]) }}
+                                    class="bg-white dark:bg-[#222831] p-4 rounded-xl inline-block shadow-lg border-2 border-[#7AAACE] mb-4">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('events.attendance.public', ['token' => $event->attendance_token])) }}"
+                                        alt="Public Attendance QR" class="w-52 h-52 object-contain mx-auto">
+                                </div>
+
+                                <div class="space-y-3">
+                                    <a href="{{ route('events.attendance.public', ['token' => $event->attendance_token]) }}"
+                                        target="_blank" class="block text-sm text-[#7AAACE] hover:underline font-medium">
+                                        معاينة صفحة الحضور ←
+                                    </a>
+                                    <div
+                                        class="text-[10px] text-[#948979] break-all px-2 font-mono bg-[#F7F8F0] dark:bg-[#222831] py-2 rounded-lg">
+                                        {{ route('events.attendance.public', ['token' => $event->attendance_token]) }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
                 @endauth
 
                 <!-- حجز متعدد التذاكر -->
                 @auth
+                    {{-- ✅ تصحيح: && بدلاً من & & --}}
                     @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin() && $event->is_public && $event->num_tickets > 0)
                         <div
                             class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-2xl shadow-lg border border-[#9CD5FF] dark:border-[#948979]">
@@ -362,13 +371,15 @@
                                         <button type="button" onclick="changeTickets(1)"
                                             class="w-10 h-10 flex items-center justify-center text-xl bg-[#9CD5FF] dark:bg-[#948979] hover:bg-[#7AAACE] dark:hover:bg-[#DFD0B8] rounded-lg transition">+</button>
                                     </div>
-                                    <p class="text-xs text-[#948979] dark:text-[#948979] mt-2">متبقي: <span
-                                            id="remaining-tickets"
-                                            class="font-semibold text-[#7AAACE]">{{ $event->num_tickets }}</span> مقعد</p>
+                                    <p class="text-xs text-[#948979] dark:text-[#948979] mt-2">
+                                        متبقي: <span id="remaining-tickets"
+                                            class="font-semibold text-[#7AAACE]">{{ $event->num_tickets }}</span> مقعد
+                                    </p>
                                 </div>
                                 <button type="button" onclick="submitAttending()"
-                                    class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition text-base">حجز
-                                    <span id="ticket-count">1</span> تذكرة</button>
+                                    class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition text-base">
+                                    حجز <span id="ticket-count">1</span> تذكرة
+                                </button>
                             </form>
                         </div>
                     @elseif (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin() && $event->num_tickets <= 0)
@@ -385,7 +396,6 @@
         <div class="mt-12">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8]">معرض الصور</h2>
-
                 @auth
                     @if (auth()->id() === $event->user_id || auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                         <a href="{{ route('galleries.create') }}?event_id={{ $event->id }}"
@@ -421,30 +431,65 @@
         </div>
     </div>
 
-    <!-- مودال النجاح -->
+    <!-- ✅ مودال النجاح المُحسّن (بدون رمز QR، يعرض معلومات الفعالية) -->
     <div id="qrSuccessModal"
         class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
-        <div class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-xl max-w-md w-full text-center relative shadow-2xl">
+        <div
+            class="bg-[#F7F8F0] dark:bg-[#393E46] p-6 rounded-2xl max-w-md w-full text-center relative shadow-2xl border border-[#9CD5FF] dark:border-[#948979]">
+
+            <!-- زر الإغلاق -->
             <button onclick="document.getElementById('qrSuccessModal').classList.add('hidden')"
-                class="absolute top-3 right-3 text-[#948979] hover:text-[#355872] text-3xl font-bold leading-none">×</button>
-            <h3 class="text-2xl font-bold text-[#7AAACE] dark:text-[#7AAACE] mb-4">شكراً لحجزك!</h3>
-            <p class="text-[#948979] dark:text-[#948979] mb-4 text-sm">تم حجز مقعدك بنجاح</p>
-            <div
-                class="bg-white dark:bg-[#222831] p-4 rounded-xl inline-block shadow-inner border-2 border-[#7AAACE] mb-4">
-                <p class="text-sm text-[#355872] dark:text-[#DFD0B8] font-mono break-all">
-                    {{ $event->title }}<br>
-                    {{ $event->start_date->format('d/m/Y H:i') }}
-                </p>
+                class="absolute top-4 right-4 text-[#948979] hover:text-[#355872] dark:hover:text-[#DFD0B8] text-3xl font-bold leading-none transition">×</button>
+
+            <!-- أيقونة النجاح -->
+            <div class="w-16 h-16 bg-[#7AAACE]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-[#7AAACE]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
             </div>
+
+            <!-- العنوان -->
+            <h3 id="modalTitle" class="text-2xl font-bold text-[#355872] dark:text-[#DFD0B8] mb-2">
+                ✅ تم الحجز بنجاح!
+            </h3>
+
+            <!-- الرسالة -->
+            <p id="modalMessage" class="text-[#948979] dark:text-[#948979] mb-6 text-sm">
+                تم تأكيد مقعدك في هذه الفعالية
+            </p>
+
+            <!-- بطاقة معلومات الفعالية -->
+            <div
+                class="bg-white/80 dark:bg-[#222831]/80 rounded-xl p-4 mb-6 border border-[#9CD5FF]/30 dark:border-[#948979]/30">
+                <h4 id="eventTitle" class="font-bold text-[#355872] dark:text-[#DFD0B8] text-base mb-3">
+                    <!-- سيتم ملؤه ديناميكياً -->
+                </h4>
+                <div class="space-y-2 text-sm text-[#948979] dark:text-[#948979] text-right">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">📍</span>
+                        <span id="eventLocation"></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🕐</span>
+                        <span id="eventDate"></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🎓</span>
+                        <span id="eventFaculty"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- زر الإغلاق -->
             <button onclick="document.getElementById('qrSuccessModal').classList.add('hidden')"
-                class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition">
+                class="w-full py-3 bg-[#7AAACE] hover:bg-[#9CD5FF] text-white font-bold rounded-xl transition shadow-md hover:shadow-lg">
                 فهمت، شكراً
             </button>
         </div>
     </div>
 </x-main-layout>
 
-<!-- Scripts (Fixed syntax errors & formatting) -->
+<!-- Scripts -->
 <script>
     let currentTickets = 1;
     const maxTickets = 10;
@@ -471,56 +516,38 @@
 
             const data = await response.json();
 
-            if (data.status === 'added') {
+            if (data.status === 'added' || response.ok) {
+                // ✅ تعبئة معلومات الفعالية في المودال
+                if (data.event) {
+                    const fields = {
+                        eventTitle: data.event.title,
+                        eventLocation: data.event.location,
+                        eventDate: data.event.start_date,
+                        eventFaculty: data.event.faculty
+                    };
+
+                    for (const [id, value] of Object.entries(fields)) {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = value || 'غير محدد';
+                    }
+                }
+
+                // تحديث الرسالة إذا وُجدت
+                if (data.message) {
+                    document.getElementById('modalMessage').textContent = data.message;
+                }
+
+                // عرض المودال
                 document.getElementById('qrSuccessModal').classList.remove('hidden');
             } else {
                 alert(data.message || 'حدث خطأ أثناء الحجز');
             }
         } catch (error) {
-            alert('فشل في الاتصال بالخادم');
+            console.error('Error:', error);
+            alert('فشل في الاتصال بالخادم. يرجى المحاولة لاحقاً.');
         }
     }
 
-    // ✅ دالة طباعة رمز الـ QR العام
-    function printQRCode() {
-        const printContent = `
-            <!DOCTYPE html>
-            <html dir="rtl" lang="ar">
-            <head>
-                <meta charset="UTF-8">
-                <title>رمز حضور - {{ $event->title }}</title>
-                <style>
-                    body { font-family: Tahoma, Arial, sans-serif; text-align: center; padding: 40px; background: #fff; color: #355872; }
-                    .qr-box { border: 3px solid #7AAACE; padding: 20px; display: inline-block; border-radius: 16px; }
-                    .qr-img { width: 200px; height: 200px; object-contain; }
-                    .event-title { font-size: 24px; font-weight: bold; margin: 20px 0 10px; }
-                    .event-info { font-size: 14px; color: #948979; margin-bottom: 20px; }
-                    .footer { font-size: 12px; color: #948979; margin-top: 30px; }
-                    @media print { body { padding: 20px; } }
-                </style>
-            </head>
-            <body>
-                <div class="qr-box">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode(route('events.attendance.public', ['token' => $event->attendance_token])) }}" class="qr-img" alt="QR">
-                    <div class="event-title">{{ $event->title }}</div>
-                    <div class="event-info">
-                        {{ $event->faculty->name }}<br>
-                        {{ $event->start_date->format('d/m/Y H:i') }}<br>
-                        {{ $event->location }}
-                    </div>
-                    <div class="footer">امسح الرمز لتسجيل حضورك • منصة فعاليات جامعة الحواش</div>
-                </div>
-                <script>window.onload = () => { setTimeout(() => window.print(), 500); }<\/script>
-            </body>
-            </html>
-        `;
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(printContent);
-        printWindow.document.close();
-    }
-</script>
-
-<script>
     function interactionHandler() {
         return {
             liked: {{ $like ? 'true' : 'false' }},
@@ -538,6 +565,14 @@
                     if (type === 'attending') {
                         this.attending = !this.attending;
                         if (res.data.status === 'added') {
+                            // عرض المودال مع بيانات الفعالية
+                            if (res.data.event) {
+                                document.getElementById('eventTitle').textContent = res.data.event.title;
+                                document.getElementById('eventLocation').textContent = res.data.event
+                                    .location || 'غير محدد';
+                                document.getElementById('eventDate').textContent = res.data.event.start_date;
+                                document.getElementById('eventFaculty').textContent = res.data.event.faculty;
+                            }
                             document.getElementById('qrSuccessModal').classList.remove('hidden');
                         }
                     }

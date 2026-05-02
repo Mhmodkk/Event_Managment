@@ -22,8 +22,8 @@ return new class extends Migration
 
             $table->string('attendance_token', 64)->unique()->nullable();
 
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
             $table->string('image');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('faculty_id')->constrained()->cascadeOnDelete();

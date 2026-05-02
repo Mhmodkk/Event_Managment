@@ -39,17 +39,6 @@
 
                     <!-- Stats Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-                        <!-- للطلاب -->
-                        @if (!auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin())
-                            <div
-                                class="p-8 bg-white dark:bg-[#222831] rounded-2xl border border-[#9CD5FF] dark:border-[#948979] shadow-sm">
-                                <p class="uppercase text-xs tracking-widest text-[#948979]">حجوزاتي</p>
-                                <p class="text-5xl font-black mt-4 text-[#355872] dark:text-[#DFD0B8]">
-                                    {{ auth()->user()->attendings()->count() }}
-                                </p>
-                            </div>
-                        @endif
-
                         <!-- للإداريين -->
                         @if (auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
                             <div

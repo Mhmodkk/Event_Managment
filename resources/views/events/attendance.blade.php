@@ -85,10 +85,6 @@
                                     </td>
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-right text-sm text-[#948979] dark:text-[#948979]">
-                                        {{ $attending->scanner?->name ?? '-' }}
-                                    </td>
-                                    <td
-                                        class="px-6 py-4 whitespace-nowrap text-right text-sm text-[#948979] dark:text-[#948979]">
                                         {{ $attending->attended_at ? $attending->attended_at->format('Y-m-d H:i') : '-' }}
                                     </td>
                                 </tr>

@@ -34,6 +34,7 @@ class EventController extends Controller
 
     public function create(): View
     {
+        $this->authorize('create', Event::class);
         $faculties = Faculty::all();
         $tags = Tag::all();
 
@@ -144,6 +145,7 @@ class EventController extends Controller
 
     public function destroy(Event $event): RedirectResponse
     {
+        $this->authorize('delete', $event);
         $user = auth()->user();
 
         if (!$user->isSuperAdmin() && $user->id !== $event->user_id) {

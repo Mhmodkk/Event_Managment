@@ -14,7 +14,6 @@ class EventAttendanceController extends Controller
         if (auth()->id() !== $event->user_id && !auth()->user()->isAdmin() && !auth()->user()->isSuperAdmin()) {
             abort(403, 'غير مصرح لك بعرض إدارة الحضور لهذه الفعالية');
         }
-        $attendings = $event->attendings()->with('user', 'scanner')->latest()->get();
         $totalBooked = $attendings->count();
         $totalAttended = $attendings->whereNotNull('attended_at')->count();
         $remainingTickets = max(0, $event->num_tickets - $totalBooked);

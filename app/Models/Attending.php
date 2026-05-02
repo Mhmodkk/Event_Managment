@@ -18,7 +18,6 @@ class Attending extends Model
         'guest_phone',
         'guest_email',
         'attended_at',
-        'qr_scanned_by',
         'qr_token',
         'qr_generated_at',
         'qr_token',
@@ -39,11 +38,6 @@ class Attending extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
-    }
-
-    public function scanner(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'qr_scanned_by');
     }
 
     public function isGuest(): bool
