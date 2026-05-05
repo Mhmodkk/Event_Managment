@@ -1,5 +1,7 @@
+# 1. استخدام نسخة CLI كما كنت تفضل، لكن مع تحسينات الاستقرار
 FROM php:8.2-cli
 
+# 2. تثبيت التبعيات الضرورية للنظام
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -18,7 +20,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
+# 3. تثبيت إضافات PHP
 RUN docker-php-ext-install \
     pdo_mysql \
     mbstring \
@@ -30,52 +32,38 @@ RUN docker-php-ext-install \
     xml \
     session
 
-
+# 4. تثبيت Imagick
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
 
-
+# 5. جلب Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-
+# 6. إعداد مجلد العمل
 WORKDIR /var/www/html
 
-
+# 7. نسخ ملفات المشروع
 COPY . .
 
-
-RUN npm ci
-
-RUN npm run build 2>&1 | tee /tmp/vite-build.log
-
-RUN if [ ! -f "public/build/manifest.json" ]; then \
-    echo "❌ ERROR: Vite build failed! manifest.json not found."; \
-    echo "=== Vite Build Log ==="; \
-    cat /tmp/vite-build.log; \
-    exit 1; \
-    fi
-
-
+# 8. تثبيت مكتبات PHP (Composer)
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd
 
-RUN mkdir -p public/logos storage/app/public/logos
-RUN cp resources/Image/HPU.png public/logos/HPU.png 2>/dev/null || true
-RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
+# 9. تثبيت مكتبات Node وبناء ملفات Vite/Mix
+RUN npm ci && npm run build
 
+# 10. إعداد المجلدات والصلاحيات (هذا الجزء يمنع الصفحة البيضاء)
+RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache public/logos
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# 11. ربط التخزين
 RUN php artisan storage:link --force
 
-
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache public
-
-
+# 12. إعدادات البيئة للإنتاج
 ENV APP_ENV=production \
-    APP_DEBUG=true \
-    LOG_CHANNEL=stderr \
-    LOG_LEVEL=debug \
-    SESSION_DRIVER=database \
-    SESSION_LIFETIME=120 \
-    TRUSTED_PROXIES=*
+    APP_DEBUG=false \
+    LOG_CHANNEL=stderr
 
-CMD ["/bin/sh", "-c", "php artisan migrate --force && php artisan db:seed --force && php artisan config:clear && php artisan serve --host=0.0.0.0 --port=$PORT"]
+# 13. أمر التشغيل النهائي
+# ملاحظة: تم استبدال migrate:fresh بـ migrate العادية للحفاظ على البيانات وسرعة التشغيل
+CMD ["sh", "-c", "php artisan config:cache && php artisan route:cache && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
