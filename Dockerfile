@@ -27,16 +27,17 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-RUN mkdir -p public/logos
-RUN cp resources/Image/HPU.png public/logos/HPU.png 2>/dev/null || true
-RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
-
 # npm install
 COPY package.json package-lock.json ./
 RUN npm install
 
 # copy project
 COPY . .
+
+# logo
+RUN mkdir -p public/logos
+RUN cp resources/Image/HPU.png public/logos/HPU.png 2>/dev/null || true
+RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
 
 # build assets
 RUN npm run build
