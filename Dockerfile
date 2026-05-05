@@ -1,47 +1,45 @@
 FROM php:8.2-cli
 
-# 1. تثبيت متطلبات النظام
+# system deps
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    unzip \
-    zip \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    libsodium-dev \
-    default-mysql-client \
-    default-libmysqlclient-dev \
+    git curl unzip zip \
+    libpng-dev libonig-dev libxml2-dev libzip-dev libsodium-dev \
+    libjpeg-dev libfreetype6-dev \
+    default-mysql-client default-libmysqlclient-dev \
     libmagickwand-dev \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 2. تثبيت إضافات PHP الأساسية (المدمجة تم حذفها لتجنب فشل البناء)
-RUN docker-php-ext-install pdo_mysql mbstring bcmath zip
+# php extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql mbstring bcmath zip gd
 
-# 3. تثبيت Imagick
+# imagick
 RUN pecl install imagick && docker-php-ext-enable imagick
 
-# 4. جلب Composer
+# composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
-# 5. نسخ الملفات وتثبيت المكتبات
+# composer install (optimized)
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
+# npm install
+COPY package.json package-lock.json ./
+RUN npm install
+
+# copy project
 COPY . .
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-gd
-RUN npm ci && npm run build
 
-# 6. إعداد المجلدات والصلاحيات (خطوة منع الصفحة البيضاء)
-RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache public/logos
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# build assets
+RUN npm run build
 
-# 7. معالجة الصور وروابط التخزين
-RUN cp resources/Image/HPU.png public/logos/HPU.png 2>/dev/null || true
-RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
-RUN php artisan storage:link --force
+# permissions
+RUN mkdir -p storage/framework/{sessions,views,cache} public/logos \
+    && chown -R www-data:www-data storage bootstrap/cache public \
+    && chmod -R 775 storage bootstrap/cache
 
-# 8. أمر التشغيل النهائي
-CMD ["sh", "-c", "rm -f bootstrap/cache/*.php && php artisan config:clear && php artisan view:clear && php artisan route:clear && php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+# run
+CMD ["sh", "-c", "php artisan storage:link --force && php artisan config:clear && php artisan view:clear && php artisan route:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
