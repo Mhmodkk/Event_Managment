@@ -5,10 +5,10 @@ namespace App\Providers;
 use App\Models\Faculty;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
         //
@@ -19,8 +19,13 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
+
         view()->composer('layouts.main-navigation', function ($view) {
-            $view->with('faculties', Faculty::all());
+            if (Schema::hasTable('faculties')) {
+                $view->with('faculties', Faculty::all());
+            } else {
+                $view->with('faculties', collect());
+            }
         });
     }
 }

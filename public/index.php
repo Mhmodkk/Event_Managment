@@ -1,5 +1,4 @@
 <?php
-die("Hello from Index.php - The server is working!");
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
