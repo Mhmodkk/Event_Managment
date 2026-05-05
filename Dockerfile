@@ -24,7 +24,7 @@ WORKDIR /var/www/html
 
 # composer install (optimized)
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # npm install
 COPY package.json package-lock.json ./

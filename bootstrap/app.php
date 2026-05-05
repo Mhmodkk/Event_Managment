@@ -1,5 +1,3 @@
-
-
 <?php
 
 use App\Http\Middleware\SuperAdminMiddleware;
