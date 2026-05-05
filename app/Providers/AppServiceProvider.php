@@ -21,9 +21,13 @@ class AppServiceProvider extends ServiceProvider
         }
 
         view()->composer('layouts.main-navigation', function ($view) {
-            if (Schema::hasTable('faculties')) {
-                $view->with('faculties', Faculty::all());
-            } else {
+            try {
+                if (Schema::hasTable('faculties')) {
+                    $view->with('faculties', Faculty::all());
+                } else {
+                    $view->with('faculties', collect());
+                }
+            } catch (\Exception $e) {
                 $view->with('faculties', collect());
             }
         });

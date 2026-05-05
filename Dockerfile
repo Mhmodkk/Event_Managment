@@ -39,5 +39,6 @@ RUN cp resources/Image/HPU.png public/logos/HPU.png 2>/dev/null || true
 RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
 
 RUN php artisan storage:link
-
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 CMD ["sh", "-c", "rm -f bootstrap/cache/*.php && php artisan config:clear && php artisan view:clear && php artisan route:clear && php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
