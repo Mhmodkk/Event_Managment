@@ -40,4 +40,4 @@ RUN cp storage/app/public/logos/HPU.png public/logos/HPU.png 2>/dev/null || true
 
 RUN php artisan storage:link
 
-CMD php artisan migrate:fresh --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT}
+CMD ["sh", "-c", "rm -f bootstrap/cache/*.php && php artisan config:clear && php artisan view:clear && php artisan route:clear && php artisan migrate --force && exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
