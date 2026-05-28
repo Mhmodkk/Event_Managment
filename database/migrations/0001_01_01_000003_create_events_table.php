@@ -19,9 +19,7 @@ return new class extends Migration
             $table->boolean('is_public')->default(false);
             $table->string('qr_code')->nullable();
             $table->integer('num_tickets');
-
             $table->string('attendance_token', 64)->unique()->nullable();
-
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->string('image');
