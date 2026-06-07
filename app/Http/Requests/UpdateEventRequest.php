@@ -22,7 +22,7 @@ class UpdateEventRequest extends FormRequest
             'end_date' => 'required|date|after_or_equal:start_date',
             'faculty_id' => 'required|exists:faculties,id',
             'num_tickets' => 'required|integer|min:1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
             'tags' => 'required|array',
             'tags.*' => 'exists:tags,id',
             'type' => 'required|string|in:workshop,course,lecture,orientation,party,trip,exhibition,sports,hackathon,job_fair',

@@ -34,7 +34,7 @@ class GalleryController extends Controller
         $validated = $request->validate([
             'event_id' => 'required|exists:events,id',
             'caption'  => 'required|string|max:255',
-            'image'    => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image'    => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
         ]);
 
         $path = $request->file('image')->store('galleries', 'public');
@@ -72,7 +72,7 @@ class GalleryController extends Controller
 
         $this->validate($request, [
             'caption' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
         ]);
 
         if ($request->hasFile('image')) {
